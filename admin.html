@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Gabi Yoga</title>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sage:#7a8c72; --sage-light:#a3b09a; --gold:#c8956c;
+  --bg:#f5f3ef; --white:#ffffff; --border:#e0dbd2;
+  --text:#2d2d2d; --text-mid:#6b6b6b; --text-light:#9a9a9a;
+  --red:#e05c5c; --green:#5c9e6e;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); font-weight:300; min-height:100vh; }
+
+/* LOGIN */
+#login-screen {
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#f7f4ef 0%,#ede8df 100%);
+}
+.login-box {
+  background:var(--white); border-radius:16px; padding:48px 40px;
+  width:360px; box-shadow:0 8px 40px rgba(0,0,0,0.08); text-align:center;
+}
+.login-logo { font-size:32px; margin-bottom:8px; }
+.login-box h1 { font-size:22px; font-weight:400; margin-bottom:4px; }
+.login-box p { font-size:13px; color:var(--text-light); margin-bottom:32px; }
+.login-box input {
+  width:100%; padding:12px 16px; border:1px solid var(--border);
+  border-radius:8px; font-size:14px; font-family:'Jost',sans-serif;
+  margin-bottom:12px; background:var(--bg); color:var(--text); outline:none;
+  transition:border-color .2s;
+}
+.login-box input:focus { border-color:var(--sage); }
+.btn-login {
+  width:100%; padding:14px; background:var(--sage); color:white;
+  border:none; border-radius:8px; font-size:13px; letter-spacing:2px;
+  text-transform:uppercase; cursor:pointer; font-family:'Jost',sans-serif;
+  transition:background .2s; margin-top:8px;
+}
+.btn-login:hover { background:var(--sage-light); }
+.login-error { color:var(--red); font-size:13px; margin-top:12px; display:none; }
+
+/* ADMIN LAYOUT */
+#admin-screen { display:none; min-height:100vh; }
+.admin-header {
+  background:var(--white); border-bottom:1px solid var(--border);
+  padding:16px 32px; display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:50;
+}
+.admin-header h1 { font-size:16px; font-weight:400; letter-spacing:2px; text-transform:uppercase; color:var(--text-mid); }
+.admin-header span { font-size:20px; }
+.btn-logout { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--text-light); background:none; border:none; cursor:pointer; font-family:'Jost',sans-serif; transition:color .2s; }
+.btn-logout:hover { color:var(--red); }
+
+.admin-body { display:flex; min-height:calc(100vh - 57px); }
+
+/* SIDEBAR */
+.sidebar {
+  width:220px; background:var(--white); border-right:1px solid var(--border);
+  padding:24px 0; flex-shrink:0;
+}
+.sidebar-item {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 24px; font-size:13px; color:var(--text-mid);
+  cursor:pointer; transition:all .15s; border-left:3px solid transparent;
+  user-select:none;
+}
+.sidebar-item:hover { color:var(--text); background:var(--bg); }
+.sidebar-item.active { color:var(--sage); border-left-color:var(--sage); background:var(--bg); font-weight:400; }
+.sidebar-item span { font-size:18px; }
+
+/* MAIN CONTENT */
+.admin-main { flex:1; padding:40px; overflow-y:auto; max-width:900px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+.panel-title { font-size:22px; font-weight:300; margin-bottom:32px; color:var(--text); }
+.panel-title em { font-style:italic; color:var(--gold); }
+
+/* CARDS */
+.card { background:var(--white); border-radius:12px; padding:28px 32px; margin-bottom:20px; border:1px solid var(--border); }
+.card-title { font-size:13px; letter-spacing:2px; text-transform:uppercase; color:var(--sage); margin-bottom:20px; font-weight:400; }
+
+/* FORM */
+.field { margin-bottom:20px; }
+.field label { display:block; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--text-light); margin-bottom:8px; font-weight:400; }
+.field input, .field textarea, .field select {
+  width:100%; padding:11px 14px; border:1px solid var(--border);
+  border-radius:8px; font-size:14px; font-family:'Jost',sans-serif;
+  background:var(--bg); color:var(--text); outline:none;
+  transition:border-color .2s; resize:vertical;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color:var(--sage); background:var(--white); }
+.field textarea { min-height:90px; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.field-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+
+/* IMG UPLOAD */
+.img-upload-area {
+  border:2px dashed var(--border); border-radius:8px;
+  padding:20px; text-align:center; cursor:pointer;
+  transition:border-color .2s, background .2s;
+}
+.img-upload-area:hover { border-color:var(--sage); background:var(--bg); }
+.img-upload-area input { display:none; }
+.img-preview { max-width:100%; max-height:160px; border-radius:6px; margin-top:12px; display:none; }
+.img-upload-label { font-size:12px; color:var(--text-light); letter-spacing:1px; }
+.img-upload-label span { font-size:24px; display:block; margin-bottom:6px; }
+
+/* BUTTONS */
+.btn-save {
+  background:var(--sage); color:white; border:none; border-radius:8px;
+  padding:12px 28px; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; font-family:'Jost',sans-serif; transition:background .2s;
+}
+.btn-save:hover { background:var(--sage-light); }
+.btn-save:disabled { background:var(--border); cursor:not-allowed; }
+.btn-delete {
+  background:none; color:var(--red); border:1px solid var(--red); border-radius:8px;
+  padding:10px 20px; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; font-family:'Jost',sans-serif; transition:all .2s;
+}
+.btn-delete:hover { background:var(--red); color:white; }
+.btn-add {
+  background:none; color:var(--sage); border:1px solid var(--sage); border-radius:8px;
+  padding:10px 20px; font-size:12px; letter-spacing:2px; text-transform:uppercase;
+  cursor:pointer; font-family:'Jost',sans-serif; transition:all .2s; margin-bottom:20px;
+}
+.btn-add:hover { background:var(--sage); color:white; }
+.btn-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+
+/* TOAST */
+.toast {
+  position:fixed; bottom:32px; right:32px; z-index:999;
+  background:var(--green); color:white; padding:14px 24px;
+  border-radius:10px; font-size:13px; letter-spacing:1px;
+  transform:translateY(80px); opacity:0; transition:all .3s;
+  pointer-events:none;
+}
+.toast.show { transform:translateY(0); opacity:1; }
+.toast.error { background:var(--red); }
+
+/* EVENT LIST */
+.event-list-item {
+  background:var(--bg); border-radius:8px; padding:16px 20px;
+  margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;
+  border:1px solid var(--border);
+}
+.event-list-item-info h4 { font-size:15px; font-weight:400; margin-bottom:2px; }
+.event-list-item-info p { font-size:12px; color:var(--text-light); }
+.event-list-item-actions { display:flex; gap:8px; }
+.btn-edit-small {
+  background:none; color:var(--sage); border:1px solid var(--sage); border-radius:6px;
+  padding:7px 14px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; font-family:'Jost',sans-serif; transition:all .2s;
+}
+.btn-edit-small:hover { background:var(--sage); color:white; }
+.btn-del-small {
+  background:none; color:var(--red); border:1px solid var(--red); border-radius:6px;
+  padding:7px 14px; font-size:11px; letter-spacing:1.5px; text-transform:uppercase;
+  cursor:pointer; font-family:'Jost',sans-serif; transition:all .2s;
+}
+.btn-del-small:hover { background:var(--red); color:white; }
+
+/* HIGHLIGHTS TAGS */
+.tag-input-area { display:flex; flex-wrap:wrap; gap:8px; padding:8px; border:1px solid var(--border); border-radius:8px; background:var(--bg); min-height:48px; align-items:center; }
+.tag { background:var(--white); border:1px solid var(--border); border-radius:20px; padding:4px 12px; font-size:12px; display:flex; align-items:center; gap:6px; }
+.tag button { background:none; border:none; cursor:pointer; color:var(--text-light); font-size:14px; line-height:1; padding:0; }
+.tag button:hover { color:var(--red); }
+.tag-input { border:none; outline:none; font-family:'Jost',sans-serif; font-size:13px; background:none; flex:1; min-width:100px; padding:4px; }
+
+/* TOGGLE */
+.toggle-field { display:flex; align-items:center; gap:12px; }
+.toggle { position:relative; width:44px; height:24px; }
+.toggle input { opacity:0; width:0; height:0; }
+.toggle-slider { position:absolute; inset:0; background:var(--border); border-radius:12px; cursor:pointer; transition:.3s; }
+.toggle-slider::before { content:""; position:absolute; width:18px; height:18px; left:3px; top:3px; background:white; border-radius:50%; transition:.3s; }
+.toggle input:checked + .toggle-slider { background:var(--sage); }
+.toggle input:checked + .toggle-slider::before { transform:translateX(20px); }
+
+/* Separator */
+.sep { height:1px; background:var(--border); margin:24px 0; }
+
+.loading-text { color:var(--text-light); font-size:13px; padding:20px 0; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🧘</div>
+    <h1>Gabi Yoga Admin</h1>
+    <p>Bitte melde dich an</p>
+    <input type="email" id="login-email" placeholder="E-Mail" autocomplete="email">
+    <input type="password" id="login-pw" placeholder="Passwort" autocomplete="current-password">
+    <button class="btn-login" onclick="doLogin()">Anmelden</button>
+    <div class="login-error" id="login-error">E-Mail oder Passwort falsch.</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-screen">
+  <div class="admin-header">
+    <span>🧘</span>
+    <h1>Gabi Yoga – Admin</h1>
+    <button class="btn-logout" onclick="doLogout()">Abmelden</button>
+  </div>
+  <div class="admin-body">
+    <div class="sidebar">
+      <div class="sidebar-item active" onclick="showTab('tab-allgemein',this)"><span>✏️</span>Allgemein</div>
+      <div class="sidebar-item" onclick="showTab('tab-ueber',this)"><span>👤</span>Über mich</div>
+      <div class="sidebar-item" onclick="showTab('tab-kurse',this)"><span>🧘</span>Kurse</div>
+      <div class="sidebar-item" onclick="showTab('tab-events',this)"><span>📅</span>Events</div>
+      <div class="sidebar-item" onclick="showTab('tab-preise',this)"><span>💶</span>Preise</div>
+      <div class="sidebar-item" onclick="showTab('tab-kontakt',this)"><span>📬</span>Kontakt</div>
+    </div>
+
+    <div class="admin-main">
+
+      <!-- ALLGEMEIN -->
+      <div class="tab-panel active" id="tab-allgemein">
+        <h2 class="panel-title">Allgemein & <em>Hero</em></h2>
+        <div class="card">
+          <div class="card-title">Hauptbild & Headline</div>
+          <div class="field">
+            <label>Label (klein, über Titel)</label>
+            <input type="text" id="heroLabel" placeholder="z.B. Yoga mit Herz & Seele">
+          </div>
+          <div class="field">
+            <label>Standort</label>
+            <input type="text" id="heroLocation" placeholder="z.B. Wermelskirchen und Umgebung">
+          </div>
+          <div class="field">
+            <label>Hauptbild</label>
+            <div class="img-upload-area" onclick="document.getElementById('heroImgFile').click()">
+              <input type="file" id="heroImgFile" accept="image/*" onchange="previewImg(this,'heroImgPreview','heroImgUrl')">
+              <div class="img-upload-label"><span>🖼️</span>Klicken zum Hochladen</div>
+              <img id="heroImgPreview" class="img-preview">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveContent()">Speichern</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Footer Text</div>
+          <div class="field">
+            <label>Kurzbeschreibung im Footer</label>
+            <textarea id="footerText" placeholder="Yoga mit Herz & Seele..."></textarea>
+          </div>
+          <div class="field">
+            <label>Preise – Untertitel</label>
+            <input type="text" id="preiseSubtitle" placeholder="Keine Mitgliedschaft, keine Bindung...">
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveContent()">Speichern</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ÜBER MICH -->
+      <div class="tab-panel" id="tab-ueber">
+        <h2 class="panel-title">Über <em>mich</em></h2>
+        <div class="card">
+          <div class="card-title">Texte</div>
+          <div class="field">
+            <label>Name (groß, kursiv)</label>
+            <input type="text" id="ueberName" placeholder="Gabi">
+          </div>
+          <div class="field">
+            <label>Zitat (hervorgehoben)</label>
+            <textarea id="ueberQuote" placeholder="„Yoga ist für mich...""></textarea>
+          </div>
+          <div class="field">
+            <label>Absatz 1</label>
+            <textarea id="ueberText1"></textarea>
+          </div>
+          <div class="field">
+            <label>Absatz 2</label>
+            <textarea id="ueberText2"></textarea>
+          </div>
+          <div class="sep"></div>
+          <div class="card-title">Fotos</div>
+          <div class="field-row">
+            <div class="field">
+              <label>Foto 1 (groß)</label>
+              <div class="img-upload-area" onclick="document.getElementById('ueberImg1File').click()">
+                <input type="file" id="ueberImg1File" accept="image/*" onchange="previewImg(this,'ueberImg1Preview','ueberImg1')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="ueberImg1Preview" class="img-preview">
+              </div>
+            </div>
+            <div class="field">
+              <label>Foto 2 (klein)</label>
+              <div class="img-upload-area" onclick="document.getElementById('ueberImg2File').click()">
+                <input type="file" id="ueberImg2File" accept="image/*" onchange="previewImg(this,'ueberImg2Preview','ueberImg2')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="ueberImg2Preview" class="img-preview">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveContent()">Speichern</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KURSE -->
+      <div class="tab-panel" id="tab-kurse">
+        <h2 class="panel-title">Kurs<em>angebote</em></h2>
+        <button class="btn-add" onclick="showKursForm()">+ Neuer Kurs</button>
+        <div id="kurs-form" style="display:none">
+          <div class="card">
+            <div class="card-title" id="kurs-form-title">Neuer Kurs</div>
+            <input type="hidden" id="kurs-edit-id">
+            <div class="field-row">
+              <div class="field"><label>Emoji</label><input type="text" id="kurs-emoji" placeholder="🌸"></div>
+              <div class="field"><label>Level</label><input type="text" id="kurs-level" placeholder="Anfänger · Alle Level"></div>
+            </div>
+            <div class="field"><label>Name</label><input type="text" id="kurs-name" placeholder="Hatha Yoga"></div>
+            <div class="field"><label>Beschreibung</label><textarea id="kurs-desc" placeholder="Sanfte, klassische Yogapraxis..."></textarea></div>
+            <div class="field"><label>Preis (ab, in €)</label><input type="number" id="kurs-preis" placeholder="15"></div>
+            <div class="btn-row">
+              <button class="btn-save" onclick="saveKurs()">Speichern</button>
+              <button class="btn-delete" onclick="document.getElementById('kurs-form').style.display='none'">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div id="kurs-list"><div class="loading-text">Lädt...</div></div>
+      </div>
+
+      <!-- EVENTS -->
+      <div class="tab-panel" id="tab-events">
+        <h2 class="panel-title">Events & <em>Workshops</em></h2>
+        <button class="btn-add" onclick="showEventForm()">+ Neues Event</button>
+        <div id="event-form" style="display:none">
+          <div class="card">
+            <div class="card-title" id="event-form-title">Neues Event</div>
+            <input type="hidden" id="event-edit-id">
+            <div class="field-row">
+              <div class="field"><label>Titel</label><input type="text" id="event-titel" placeholder='"Heart & Soul"'></div>
+              <div class="field"><label>Untertitel (kursiv, gold)</label><input type="text" id="event-untertitel" placeholder="Yoga Day"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Datum (Anzeige)</label><input type="text" id="event-datum" placeholder="Sonntag, 27. April 2025 · 15:30–21:30 Uhr"></div>
+              <div class="field"><label>Datum-Icon (Zahl/Text)</label><input type="text" id="event-datumAnzeige" placeholder="27"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Ort</label><input type="text" id="event-ort" placeholder="Brunnenhaus Retreatcenter..."></div>
+              <div class="field"><label>Preis (ab, in €)</label><input type="number" id="event-preis" placeholder="49"></div>
+            </div>
+            <div class="field">
+              <label>Highlights (Enter = neuer Punkt)</label>
+              <div class="tag-input-area" id="event-highlights-tags">
+                <input type="text" class="tag-input" id="event-highlight-input" placeholder="Highlight eingeben + Enter" onkeydown="addHighlight(event)">
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="card-title">Bilder</div>
+            <div class="field-row">
+              <div class="field">
+                <label>Bild 1</label>
+                <div class="img-upload-area" onclick="document.getElementById('eventImg1File').click()">
+                  <input type="file" id="eventImg1File" accept="image/*" onchange="previewImg(this,'eventImg1Preview','eventImg1Url')">
+                  <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                  <img id="eventImg1Preview" class="img-preview">
+                </div>
+              </div>
+              <div class="field">
+                <label>Bild 2</label>
+                <div class="img-upload-area" onclick="document.getElementById('eventImg2File').click()">
+                  <input type="file" id="eventImg2File" accept="image/*" onchange="previewImg(this,'eventImg2Preview','eventImg2Url')">
+                  <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                  <img id="eventImg2Preview" class="img-preview">
+                </div>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="card-title">Bezahlung</div>
+            <div class="field-row">
+              <div class="field"><label>PayPal Link</label><input type="url" id="event-paypal" placeholder="https://paypal.me/..."></div>
+              <div class="field"><label>Stripe Link</label><input type="url" id="event-stripe" placeholder="https://buy.stripe.com/..."></div>
+            </div>
+            <div class="btn-row">
+              <button class="btn-save" onclick="saveEvent()">Speichern</button>
+              <button class="btn-delete" onclick="document.getElementById('event-form').style.display='none'">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div id="event-list"><div class="loading-text">Lädt...</div></div>
+      </div>
+
+      <!-- PREISE -->
+      <div class="tab-panel" id="tab-preise">
+        <h2 class="panel-title">Tickets & <em>Preise</em></h2>
+        <button class="btn-add" onclick="showPreisForm()">+ Neues Ticket</button>
+        <div id="preis-form" style="display:none">
+          <div class="card">
+            <div class="card-title" id="preis-form-title">Neues Ticket</div>
+            <input type="hidden" id="preis-edit-id">
+            <div class="field-row">
+              <div class="field"><label>Emoji</label><input type="text" id="preis-emoji" placeholder="🌱"></div>
+              <div class="field"><label>Name</label><input type="text" id="preis-name" placeholder="Probestunde"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Beschreibung</label><input type="text" id="preis-desc" placeholder="Für Neulinge — einmalig"></div>
+              <div class="field"><label>Einheit</label><input type="text" id="preis-einheit" placeholder="einmalig"></div>
+            </div>
+            <div class="field-row">
+              <div class="field"><label>Preis (€)</label><input type="number" id="preis-preis" placeholder="10"></div>
+              <div class="field"><label>Reihenfolge</label><input type="number" id="preis-reihenfolge" placeholder="1"></div>
+            </div>
+            <div class="field">
+              <label>Hervorheben ("Beliebteste Wahl")</label>
+              <div class="toggle-field">
+                <label class="toggle"><input type="checkbox" id="preis-featured"><span class="toggle-slider"></span></label>
+                <span style="font-size:13px;color:var(--text-mid)">Als Featured markieren</span>
+              </div>
+            </div>
+            <div class="sep"></div>
+            <div class="card-title">Bezahlung</div>
+            <div class="field-row">
+              <div class="field"><label>PayPal Link</label><input type="url" id="preis-paypal" placeholder="https://paypal.me/..."></div>
+              <div class="field"><label>Stripe Link</label><input type="url" id="preis-stripe" placeholder="https://buy.stripe.com/..."></div>
+            </div>
+            <div class="btn-row">
+              <button class="btn-save" onclick="savePreis()">Speichern</button>
+              <button class="btn-delete" onclick="document.getElementById('preis-form').style.display='none'">Abbrechen</button>
+            </div>
+          </div>
+        </div>
+        <div id="preis-list"><div class="loading-text">Lädt...</div></div>
+      </div>
+
+      <!-- KONTAKT -->
+      <div class="tab-panel" id="tab-kontakt">
+        <h2 class="panel-title">Kontakt & <em>Social</em></h2>
+        <div class="card">
+          <div class="card-title">Kontaktdaten</div>
+          <div class="field"><label>E-Mail Adresse</label><input type="email" id="kontaktEmail" placeholder="gabi@email.de"></div>
+          <div class="field"><label>WhatsApp Nummer (mit Ländervorwahl, z.B. +4915...)</label><input type="tel" id="kontaktWhatsapp" placeholder="+49151..."></div>
+          <div class="field"><label>Instagram URL</label><input type="url" id="kontaktInstagram" placeholder="https://instagram.com/gabiyoga"></div>
+          <div class="sep"></div>
+          <div class="card-title">Kontakttext</div>
+          <div class="field"><label>Text unter der Überschrift</label><textarea id="kontaktText" placeholder="Melde dich einfach..."></textarea></div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveContent()">Speichern</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-main -->
+  </div><!-- /admin-body -->
+</div><!-- /admin-screen -->
+
+<div class="toast" id="toast"></div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// ── CLOUDINARY CONFIG ──
+const CLOUDINARY_CLOUD = "dqm6lgdus";
+const CLOUDINARY_PRESET = "Gabi-Yoga";
+
+// ── HIER DEINE FIREBASE-DATEN EINTRAGEN ──
+const firebaseConfig = {
+  apiKey: "AIzaSyBAk6z2EA5wo1AXvfhGEgPvBCQoetMtMEc",
+  authDomain: "gabi-yoga.firebaseapp.com",
+  projectId: "gabi-yoga",
+  storageBucket: "gabi-yoga.firebasestorage.app",
+  messagingSenderId: "1046508878568",
+  appId: "1:1046508878568:web:cb97869b7f1c1a1e44e75d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// ── CLOUDINARY UPLOAD ──
+async function uploadToCloudinary(file) {
+  if (!file) return null;
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("upload_preset", CLOUDINARY_PRESET);
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+    method: "POST", body: fd
+  });
+  if (!res.ok) throw new Error("Cloudinary Upload fehlgeschlagen");
+  const data = await res.json();
+  return data.secure_url;
+}
+
+async function uploadFile(key) {
+  const file = window._uploadedFiles && window._uploadedFiles[key];
+  if (!file) return null;
+  return await uploadToCloudinary(file);
+}
+
+// STATE
+window._highlights = [];
+window._uploadedUrls = {};
+
+// ── AUTH ──
+window.doLogin = async function() {
+  const email = document.getElementById("login-email").value;
+  const pw = document.getElementById("login-pw").value;
+  const errEl = document.getElementById("login-error");
+  errEl.style.display = "none";
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch(e) {
+    errEl.style.display = "block";
+  }
+};
+
+window.doLogout = async function() {
+  await signOut(auth);
+};
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById("login-screen").style.display = "none";
+    document.getElementById("admin-screen").style.display = "block";
+    loadAll();
+  } else {
+    document.getElementById("login-screen").style.display = "flex";
+    document.getElementById("admin-screen").style.display = "none";
+  }
+});
+
+// ── TABS ──
+window.showTab = function(tabId, el) {
+  document.querySelectorAll(".tab-panel").forEach(t => t.classList.remove("active"));
+  document.querySelectorAll(".sidebar-item").forEach(s => s.classList.remove("active"));
+  document.getElementById(tabId).classList.add("active");
+  el.classList.add("active");
+};
+
+// ── TOAST ──
+function toast(msg, isError=false) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show" + (isError ? " error" : "");
+  setTimeout(() => t.className = "toast", 3000);
+}
+
+// ── IMAGE UPLOAD ──
+window.previewImg = function(input, previewId, urlKey) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const prev = document.getElementById(previewId);
+    prev.src = e.target.result;
+    prev.style.display = "block";
+  };
+  reader.readAsDataURL(file);
+  window._uploadedFiles = window._uploadedFiles || {};
+  window._uploadedFiles[urlKey] = file;
+};
+
+async function uploadFile(key, path) {
+  const file = window._uploadedFiles && window._uploadedFiles[key];
+  if (!file) return null;
+  const storageRef = ref(storage, path + "/" + Date.now() + "_" + file.name);
+  await uploadBytes(storageRef, file);
+  return await getDownloadURL(storageRef);
+}
+
+// ── LOAD ALL ──
+async function loadAll() {
+  await loadContentForm();
+  await loadKursList();
+  await loadEventsList();
+  await loadPreisList();
+}
+
+// ── CONTENT (main doc) ──
+async function loadContentForm() {
+  try {
+    const snap = await getDoc(doc(db, "content", "main"));
+    if (!snap.exists()) return;
+    const d = snap.data();
+    const fields = ["heroLabel","heroLocation","ueberName","ueberQuote","ueberText1","ueberText2","footerText","preiseSubtitle","kontaktText"];
+    fields.forEach(f => { const el = document.getElementById(f); if(el && d[f]) el.value = d[f]; });
+    if(d.email) document.getElementById("kontaktEmail").value = d.email;
+    if(d.whatsapp) document.getElementById("kontaktWhatsapp").value = d.whatsapp;
+    if(d.instagram) document.getElementById("kontaktInstagram").value = d.instagram;
+    // show existing images
+    ["heroImgUrl","ueberImg1","ueberImg2"].forEach(k => {
+      if(d[k]) { window._uploadedUrls[k] = d[k]; }
+    });
+  } catch(e) {}
+}
+
+window.saveContent = async function() {
+  try {
+    const heroImgUrl = await uploadFile("heroImgUrl") || window._uploadedUrls["heroImgUrl"] || null;
+    const ueberImg1 = await uploadFile("ueberImg1") || window._uploadedUrls["ueberImg1"] || null;
+    const ueberImg2 = await uploadFile("ueberImg2") || window._uploadedUrls["ueberImg2"] || null;
+
+    const data = {
+      heroLabel: v("heroLabel"), heroLocation: v("heroLocation"),
+      ueberName: v("ueberName"), ueberQuote: v("ueberQuote"),
+      ueberText1: v("ueberText1"), ueberText2: v("ueberText2"),
+      footerText: v("footerText"), preiseSubtitle: v("preiseSubtitle"),
+      kontaktText: v("kontaktText"),
+      email: v("kontaktEmail"), whatsapp: v("kontaktWhatsapp"), instagram: v("kontaktInstagram"),
+    };
+    if(heroImgUrl) data.heroImg = heroImgUrl;
+    if(ueberImg1) data.ueberImg1 = ueberImg1;
+    if(ueberImg2) data.ueberImg2 = ueberImg2;
+
+    await setDoc(doc(db,"content","main"), data, {merge:true});
+    toast("✅ Gespeichert!");
+  } catch(e) { toast("Fehler beim Speichern", true); }
+};
+
+function v(id) { return document.getElementById(id)?.value?.trim() || ""; }
+
+// ── KURSE ──
+window.showKursForm = function(data, id) {
+  const form = document.getElementById("kurs-form");
+  form.style.display = "block";
+  document.getElementById("kurs-form-title").textContent = id ? "Kurs bearbeiten" : "Neuer Kurs";
+  document.getElementById("kurs-edit-id").value = id || "";
+  document.getElementById("kurs-emoji").value = data?.emoji || "";
+  document.getElementById("kurs-level").value = data?.level || "";
+  document.getElementById("kurs-name").value = data?.name || "";
+  document.getElementById("kurs-desc").value = data?.beschreibung || "";
+  document.getElementById("kurs-preis").value = data?.preis || "";
+  form.scrollIntoView({behavior:"smooth"});
+};
+
+window.saveKurs = async function() {
+  const id = v("kurs-edit-id");
+  const data = { emoji:v("kurs-emoji"), level:v("kurs-level"), name:v("kurs-name"), beschreibung:v("kurs-desc"), preis:v("kurs-preis") };
+  try {
+    if(id) await updateDoc(doc(db,"kurse",id), data);
+    else await addDoc(collection(db,"kurse"), data);
+    document.getElementById("kurs-form").style.display = "none";
+    toast("✅ Kurs gespeichert!");
+    await loadKursList();
+  } catch(e) { toast("Fehler", true); }
+};
+
+window.deleteKurs = async function(id) {
+  if(!confirm("Kurs wirklich löschen?")) return;
+  await deleteDoc(doc(db,"kurse",id));
+  toast("Kurs gelöscht");
+  await loadKursList();
+};
+
+async function loadKursList() {
+  const container = document.getElementById("kurs-list");
+  const snap = await getDocs(collection(db,"kurse"));
+  if(snap.empty) { container.innerHTML = '<p class="loading-text">Noch keine Kurse.</p>'; return; }
+  container.innerHTML = "";
+  snap.forEach(d => {
+    const k = d.data();
+    container.innerHTML += `<div class="event-list-item"><div class="event-list-item-info"><h4>${k.emoji||""} ${k.name||""}</h4><p>${k.level||""} · ab ${k.preis||"?"}€</p></div><div class="event-list-item-actions"><button class="btn-edit-small" onclick='showKursForm(${JSON.stringify(k)},"${d.id}")'>Bearbeiten</button><button class="btn-del-small" onclick="deleteKurs('${d.id}')">Löschen</button></div></div>`;
+  });
+}
+
+// ── EVENTS ──
+window._highlights = [];
+
+window.addHighlight = function(e) {
+  if(e.key !== "Enter") return;
+  e.preventDefault();
+  const input = document.getElementById("event-highlight-input");
+  const val = input.value.trim();
+  if(!val) return;
+  window._highlights.push(val);
+  renderHighlights();
+  input.value = "";
+};
+
+function renderHighlights() {
+  const area = document.getElementById("event-highlights-tags");
+  const input = document.getElementById("event-highlight-input");
+  area.innerHTML = "";
+  window._highlights.forEach((h,i) => {
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.innerHTML = `${h}<button onclick="removeHighlight(${i})">×</button>`;
+    area.appendChild(tag);
+  });
+  area.appendChild(input);
+}
+
+window.removeHighlight = function(i) {
+  window._highlights.splice(i,1);
+  renderHighlights();
+};
+
+window.showEventForm = function(data, id) {
+  const form = document.getElementById("event-form");
+  form.style.display = "block";
+  document.getElementById("event-form-title").textContent = id ? "Event bearbeiten" : "Neues Event";
+  document.getElementById("event-edit-id").value = id || "";
+  document.getElementById("event-titel").value = data?.titel || "";
+  document.getElementById("event-untertitel").value = data?.untertitel || "";
+  document.getElementById("event-datum").value = data?.datum || "";
+  document.getElementById("event-datumAnzeige").value = data?.datumAnzeige || "";
+  document.getElementById("event-ort").value = data?.ort || "";
+  document.getElementById("event-preis").value = data?.preis || "";
+  document.getElementById("event-paypal").value = data?.paypalLink || "";
+  document.getElementById("event-stripe").value = data?.stripeLink || "";
+  window._highlights = data?.highlights || [];
+  renderHighlights();
+  form.scrollIntoView({behavior:"smooth"});
+};
+
+window.saveEvent = async function() {
+  const id = v("event-edit-id");
+  const img1 = await uploadFile("eventImg1Url") || null;
+  const img2 = await uploadFile("eventImg2Url") || null;
+  const bilder = [img1, img2].filter(Boolean);
+
+  const data = {
+    titel:v("event-titel"), untertitel:v("event-untertitel"),
+    datum:v("event-datum"), datumAnzeige:v("event-datumAnzeige"),
+    ort:v("event-ort"), preis:v("event-preis"),
+    paypalLink:v("event-paypal"), stripeLink:v("event-stripe"),
+    highlights: window._highlights,
+  };
+  if(bilder.length) data.bilder = bilder;
+
+  try {
+    if(id) await updateDoc(doc(db,"events",id), data);
+    else await addDoc(collection(db,"events"), data);
+    document.getElementById("event-form").style.display = "none";
+    window._highlights = [];
+    toast("✅ Event gespeichert!");
+    await loadEventsList();
+  } catch(e) { toast("Fehler", true); console.error(e); }
+};
+
+window.deleteEvent = async function(id) {
+  if(!confirm("Event wirklich löschen?")) return;
+  await deleteDoc(doc(db,"events",id));
+  toast("Event gelöscht");
+  await loadEventsList();
+};
+
+async function loadEventsList() {
+  const container = document.getElementById("event-list");
+  const snap = await getDocs(collection(db,"events"));
+  if(snap.empty) { container.innerHTML = '<p class="loading-text">Noch keine Events.</p>'; return; }
+  container.innerHTML = "";
+  snap.forEach(d => {
+    const e = d.data();
+    container.innerHTML += `<div class="event-list-item"><div class="event-list-item-info"><h4>${e.titel||""} ${e.untertitel||""}</h4><p>${e.datum||"Datum folgt"} · ${e.ort||""}</p></div><div class="event-list-item-actions"><button class="btn-edit-small" onclick='showEventForm(${JSON.stringify(e)},"${d.id}")'>Bearbeiten</button><button class="btn-del-small" onclick="deleteEvent('${d.id}')">Löschen</button></div></div>`;
+  });
+}
+
+// ── PREISE ──
+window.showPreisForm = function(data, id) {
+  const form = document.getElementById("preis-form");
+  form.style.display = "block";
+  document.getElementById("preis-form-title").textContent = id ? "Ticket bearbeiten" : "Neues Ticket";
+  document.getElementById("preis-edit-id").value = id || "";
+  document.getElementById("preis-emoji").value = data?.emoji || "";
+  document.getElementById("preis-name").value = data?.name || "";
+  document.getElementById("preis-desc").value = data?.beschreibung || "";
+  document.getElementById("preis-einheit").value = data?.einheit || "";
+  document.getElementById("preis-preis").value = data?.preis || "";
+  document.getElementById("preis-reihenfolge").value = data?.reihenfolge || "";
+  document.getElementById("preis-featured").checked = data?.featured || false;
+  document.getElementById("preis-paypal").value = data?.paypalLink || "";
+  document.getElementById("preis-stripe").value = data?.stripeLink || "";
+  form.scrollIntoView({behavior:"smooth"});
+};
+
+window.savePreis = async function() {
+  const id = v("preis-edit-id");
+  const data = {
+    emoji:v("preis-emoji"), name:v("preis-name"),
+    beschreibung:v("preis-desc"), einheit:v("preis-einheit"),
+    preis:v("preis-preis"), reihenfolge:parseInt(v("preis-reihenfolge"))||0,
+    featured: document.getElementById("preis-featured").checked,
+    paypalLink:v("preis-paypal"), stripeLink:v("preis-stripe"),
+  };
+  try {
+    if(id) await updateDoc(doc(db,"preise",id), data);
+    else await addDoc(collection(db,"preise"), data);
+    document.getElementById("preis-form").style.display = "none";
+    toast("✅ Ticket gespeichert!");
+    await loadPreisList();
+  } catch(e) { toast("Fehler", true); }
+};
+
+window.deletePreis = async function(id) {
+  if(!confirm("Ticket wirklich löschen?")) return;
+  await deleteDoc(doc(db,"preise",id));
+  toast("Ticket gelöscht");
+  await loadPreisList();
+};
+
+async function loadPreisList() {
+  const container = document.getElementById("preis-list");
+  const snap = await getDocs(collection(db,"preise"));
+  if(snap.empty) { container.innerHTML = '<p class="loading-text">Noch keine Tickets.</p>'; return; }
+  container.innerHTML = "";
+  snap.forEach(d => {
+    const p = d.data();
+    container.innerHTML += `<div class="event-list-item"><div class="event-list-item-info"><h4>${p.emoji||""} ${p.name||""} ${p.featured?"⭐":""}</h4><p>${p.preis||"?"}€ · ${p.einheit||""}</p></div><div class="event-list-item-actions"><button class="btn-edit-small" onclick='showPreisForm(${JSON.stringify(p)},"${d.id}")'>Bearbeiten</button><button class="btn-del-small" onclick="deletePreis('${d.id}')">Löschen</button></div></div>`;
+  });
+}
+</script>
+</body>
+</html>
