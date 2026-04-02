@@ -566,14 +566,6 @@ window.previewImg = function(input, previewId, urlKey) {
   window._uploadedFiles[urlKey] = file;
 };
 
-async function uploadFile(key, path) {
-  const file = window._uploadedFiles && window._uploadedFiles[key];
-  if (!file) return null;
-  const storageRef = ref(storage, path + "/" + Date.now() + "_" + file.name);
-  await uploadBytes(storageRef, file);
-  return await getDownloadURL(storageRef);
-}
-
 // ── LOAD ALL ──
 async function loadAll() {
   await loadContentForm();
