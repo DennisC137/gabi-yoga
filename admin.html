@@ -628,7 +628,8 @@ window.showKursForm = function(data, id) {
   document.getElementById("kurs-name").value = data?.name || "";
   document.getElementById("kurs-desc").value = data?.beschreibung || "";
   document.getElementById("kurs-preis").value = data?.preis || "";
-  form.scrollIntoView({behavior:"smooth"});
+  // Scroll erst nach kurzem Delay damit das Formular sichtbar ist
+  setTimeout(() => form.scrollIntoView({behavior:"smooth"}), 50);
 };
 
 window.saveKurs = async function() {
@@ -708,6 +709,24 @@ window.showEventForm = function(data, id) {
   document.getElementById("event-stripe").value = data?.stripeLink || "";
   window._highlights = data?.highlights || [];
   renderHighlights();
+
+  // Bild-Previews und File-Inputs zurücksetzen
+  ["eventImg1", "eventImg2"].forEach((key, i) => {
+    const preview = document.getElementById(key + "Preview");
+    const fileInput = document.getElementById(key + "File");
+    if (preview) { preview.style.display = "none"; preview.src = ""; }
+    if (fileInput) fileInput.value = "";
+    // Alte Upload-Daten löschen
+    if (window._uploadedFiles) delete window._uploadedFiles[key + "Url"];
+  });
+  // Bei Bearbeitung: vorhandene Bilder als Preview anzeigen
+  if (data?.bilder && data.bilder.length > 0) {
+    data.bilder.forEach((url, i) => {
+      const preview = document.getElementById("eventImg" + (i+1) + "Preview");
+      if (preview && url) { preview.src = url; preview.style.display = "block"; }
+    });
+  }
+
   form.scrollIntoView({behavior:"smooth"});
 };
 
@@ -715,7 +734,7 @@ window.saveEvent = async function() {
   const id = v("event-edit-id");
   const img1 = await uploadFile("eventImg1Url") || null;
   const img2 = await uploadFile("eventImg2Url") || null;
-  const bilder = [img1, img2].filter(Boolean);
+  const newBilder = [img1, img2].filter(Boolean);
 
   const data = {
     titel:v("event-titel"), untertitel:v("event-untertitel"),
@@ -724,13 +743,26 @@ window.saveEvent = async function() {
     paypalLink:v("event-paypal"), stripeLink:v("event-stripe"),
     highlights: window._highlights,
   };
-  if(bilder.length) data.bilder = bilder;
+
+  // Nur Bilder überschreiben wenn neue hochgeladen wurden
+  if (newBilder.length) {
+    data.bilder = newBilder;
+  }
+  // Bei neuem Event ohne Bilder: leeres Array setzen
+  if (!id && !newBilder.length) {
+    data.bilder = [];
+  }
 
   try {
     if(id) await updateDoc(doc(db,"events",id), data);
     else await addDoc(collection(db,"events"), data);
     document.getElementById("event-form").style.display = "none";
     window._highlights = [];
+    // Uploads zurücksetzen
+    if (window._uploadedFiles) {
+      delete window._uploadedFiles["eventImg1Url"];
+      delete window._uploadedFiles["eventImg2Url"];
+    }
     toast("✅ Event gespeichert!");
     await loadEventsList();
   } catch(e) { toast("Fehler", true); console.error(e); }
