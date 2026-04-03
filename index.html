@@ -38,20 +38,20 @@ body{font-family:'Jost',sans-serif;background:var(--warm-white);color:var(--text
 .delay-1{transition-delay:.12s}.delay-2{transition-delay:.24s}.delay-3{transition-delay:.36s}
 
 /* === NAV === */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:12px 40px;background:rgba(253,252,250,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--sage-muted);transition:all .3s}
-nav.scrolled{padding:6px 40px;box-shadow:0 1px 20px rgba(0,0,0,.06)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:14px 40px;background:rgba(253,252,250,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--sage-muted);transition:all .3s}
+nav.scrolled{padding:8px 40px;box-shadow:0 1px 20px rgba(0,0,0,.06)}
 .nav-left,.nav-right{flex:1;display:flex;align-items:center}
 .nav-left{justify-content:flex-end;padding-right:40px}
 .nav-right{justify-content:flex-start;padding-left:40px}
 .nav-center{flex-shrink:0;position:relative;z-index:101}
 .nav-logo{display:block;text-decoration:none;transition:transform .3s;position:relative}
 .nav-logo:hover{transform:scale(1.06)}
-.nav-logo-img{height:90px;width:90px;border-radius:50%;object-fit:cover;display:block;transition:all .4s;box-shadow:0 4px 20px rgba(122,140,114,.25);border:3px solid rgba(255,255,255,.9);margin:-15px 0}
-nav.scrolled .nav-logo-img{height:62px;width:62px;margin:-10px 0;box-shadow:0 2px 12px rgba(122,140,114,.2)}
+.nav-logo-img{height:140px;width:140px;border-radius:50%;object-fit:cover;display:block;transition:all .4s;box-shadow:0 6px 30px rgba(107,127,99,.35);border:4px solid rgba(255,255,255,.95);margin:-45px 0}
+nav.scrolled .nav-logo-img{height:90px;width:90px;margin:-25px 0;box-shadow:0 4px 20px rgba(107,127,99,.25)}
 /* Fallback wenn Bild nicht lädt */
-.nav-logo-fallback{width:80px;height:80px;border:2px solid var(--sage);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--sage);margin:-12px 0;box-shadow:0 4px 20px rgba(122,140,114,.25)}
-.nav-logo-fallback span:first-child{font-size:8px;letter-spacing:2.5px;color:#fff;font-weight:400;text-transform:uppercase;line-height:1.2}
-.nav-logo-fallback span:last-child{font-family:'Cormorant Garamond',serif;font-size:18px;color:#fff;font-weight:600;line-height:1}
+.nav-logo-fallback{width:120px;height:120px;border:3px solid rgba(255,255,255,.9);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--sage);margin:-35px 0;box-shadow:0 6px 30px rgba(107,127,99,.35)}
+.nav-logo-fallback span:first-child{font-size:10px;letter-spacing:3px;color:#fff;font-weight:400;text-transform:uppercase;line-height:1.2}
+.nav-logo-fallback span:last-child{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;font-weight:600;line-height:1}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-mid);text-decoration:none;font-weight:400;transition:color .2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--sage);transition:width .3s}
@@ -289,9 +289,11 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   .nav-cta{display:none}
   .nav-left,.nav-right{flex:0}
   .nav-center{flex:1;display:flex;justify-content:flex-start}
-  .nav-logo-img{height:64px;width:64px;margin:-10px 0}
-  nav.scrolled .nav-logo-img{height:50px;width:50px;margin:-6px 0}
-  .nav-logo-fallback{width:58px;height:58px;margin:-8px 0}
+  .nav-logo-img{height:100px;width:100px;margin:-30px 0}
+  nav.scrolled .nav-logo-img{height:70px;width:70px;margin:-18px 0}
+  .nav-logo-fallback{width:90px;height:90px;margin:-25px 0}
+  .nav-logo-fallback span:first-child{font-size:9px}
+  .nav-logo-fallback span:last-child{font-size:20px}
   section{padding:56px 20px}
   #hero{padding:100px 20px 64px;min-height:90vh}
   .hero-content h1{font-size:32px}
