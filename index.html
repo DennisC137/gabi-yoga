@@ -12,9 +12,10 @@
 :root {
   --cream: #f7f4ef;
   --warm-white: #fdfcfa;
-  --sage: #7a8c72;
-  --sage-light: #a3b09a;
-  --sage-pale: #e8ede5;
+  --sage: #6b7f63;
+  --sage-light: #8fa387;
+  --sage-pale: #e2ebe0;
+  --sage-muted: #d1dece;
   --gold: #c8956c;
   --gold-light: #ddb08a;
   --dark: #1a1a1a;
@@ -37,20 +38,20 @@ body{font-family:'Jost',sans-serif;background:var(--warm-white);color:var(--text
 .delay-1{transition-delay:.12s}.delay-2{transition-delay:.24s}.delay-3{transition-delay:.36s}
 
 /* === NAV === */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:10px 40px;background:rgba(253,252,250,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(232,226,217,.5);transition:all .3s}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:12px 40px;background:rgba(253,252,250,.95);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--sage-muted);transition:all .3s}
 nav.scrolled{padding:6px 40px;box-shadow:0 1px 20px rgba(0,0,0,.06)}
 .nav-left,.nav-right{flex:1;display:flex;align-items:center}
-.nav-left{justify-content:flex-end;padding-right:32px}
-.nav-right{justify-content:flex-start;padding-left:32px}
-.nav-center{flex-shrink:0}
-.nav-logo{display:block;text-decoration:none;transition:transform .3s}
-.nav-logo:hover{transform:scale(1.05)}
-.nav-logo-img{height:56px;width:56px;border-radius:50%;object-fit:cover;display:block;transition:all .3s}
-nav.scrolled .nav-logo-img{height:42px;width:42px}
+.nav-left{justify-content:flex-end;padding-right:40px}
+.nav-right{justify-content:flex-start;padding-left:40px}
+.nav-center{flex-shrink:0;position:relative;z-index:101}
+.nav-logo{display:block;text-decoration:none;transition:transform .3s;position:relative}
+.nav-logo:hover{transform:scale(1.06)}
+.nav-logo-img{height:90px;width:90px;border-radius:50%;object-fit:cover;display:block;transition:all .4s;box-shadow:0 4px 20px rgba(122,140,114,.25);border:3px solid rgba(255,255,255,.9);margin:-15px 0}
+nav.scrolled .nav-logo-img{height:62px;width:62px;margin:-10px 0;box-shadow:0 2px 12px rgba(122,140,114,.2)}
 /* Fallback wenn Bild nicht lädt */
-.nav-logo-fallback{width:48px;height:48px;border:1.5px solid var(--sage);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
-.nav-logo-fallback span:first-child{font-size:7px;letter-spacing:2px;color:var(--sage);font-weight:400;text-transform:uppercase;line-height:1.2}
-.nav-logo-fallback span:last-child{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--sage);font-weight:600;line-height:1}
+.nav-logo-fallback{width:80px;height:80px;border:2px solid var(--sage);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:var(--sage);margin:-12px 0;box-shadow:0 4px 20px rgba(122,140,114,.25)}
+.nav-logo-fallback span:first-child{font-size:8px;letter-spacing:2.5px;color:#fff;font-weight:400;text-transform:uppercase;line-height:1.2}
+.nav-logo-fallback span:last-child{font-family:'Cormorant Garamond',serif;font-size:18px;color:#fff;font-weight:600;line-height:1}
 .nav-links{display:flex;gap:28px;list-style:none}
 .nav-links a{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-mid);text-decoration:none;font-weight:400;transition:color .2s;position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--sage);transition:width .3s}
@@ -78,8 +79,8 @@ section{padding:100px 80px}
 .hero-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5.5vw,64px);font-weight:300;line-height:1.12;color:#fff;margin-bottom:20px}
 .hero-content h1 em{font-style:italic;color:var(--gold-light)}
 .hero-content p{font-size:clamp(16px,1.8vw,20px);color:rgba(255,255,255,.85);font-weight:300;line-height:1.6;margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto}
-.btn-hero{display:inline-block;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--dark);background:var(--gold-light);padding:18px 48px;border-radius:2px;text-decoration:none;font-weight:500;transition:all .3s}
-.btn-hero:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,149,108,.3)}
+.btn-hero{display:inline-block;font-size:13px;letter-spacing:3px;text-transform:uppercase;color:#fff;background:var(--sage);padding:18px 48px;border-radius:2px;text-decoration:none;font-weight:500;transition:all .3s}
+.btn-hero:hover{background:var(--sage-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(107,127,99,.4)}
 .hero-trust{margin-top:20px;font-size:12px;color:rgba(255,255,255,.55);letter-spacing:1px}
 
 /* === 2. PROBLEM === */
@@ -87,7 +88,7 @@ section{padding:100px 80px}
 .problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
 .problem-text h2{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,3.5vw,44px);font-weight:300;line-height:1.2;margin-bottom:24px;color:var(--text-dark)}
 .problem-text p{font-size:16px;line-height:1.8;color:var(--text-mid);margin-bottom:16px}
-.problem-text .highlight{font-weight:400;color:var(--text-dark);font-size:17px}
+.problem-text .highlight{font-weight:400;color:var(--text-dark);font-size:17px;border-left:3px solid var(--sage);padding-left:16px}
 .problem-img{border-radius:var(--r);overflow:hidden;height:420px;background:var(--cream);display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:12px;letter-spacing:1px;text-transform:uppercase}
 .problem-img img{width:100%;height:100%;object-fit:cover}
 
@@ -112,7 +113,7 @@ section{padding:100px 80px}
 .check-list li::before{content:'✔';color:var(--sage);font-weight:600;flex-shrink:0;margin-top:2px}
 
 /* === 5. ANGEBOTE (KURSE) === */
-#angebote{background:var(--cream)}
+#angebote{background:var(--sage-pale)}
 .angebote-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px}
 .kurs-cards{display:flex;flex-direction:column;gap:20px}
 .kurs-card{background:var(--warm-white);border-radius:var(--r);padding:36px 40px;border:1px solid rgba(232,226,217,.5);transition:transform .3s,box-shadow .3s}
@@ -126,7 +127,7 @@ section{padding:100px 80px}
 .kurs-preis{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;color:var(--text-dark)}
 .btn-buchen{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--sage);text-decoration:none;cursor:pointer;background:none;border:1px solid var(--sage);font-family:'Jost',sans-serif;font-weight:400;padding:8px 20px;border-radius:24px;transition:all .25s}
 .btn-buchen:hover{background:var(--sage);color:#fff}
-.angebot-box{background:var(--warm-white);border-radius:var(--r);padding:48px;border:1px solid var(--border);margin-top:40px}
+.angebot-box{background:var(--warm-white);border-radius:var(--r);padding:48px;border:1px solid var(--sage-muted);border-top:3px solid var(--sage);margin-top:40px}
 .angebot-box h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;margin-bottom:24px;color:var(--text-dark)}
 .angebot-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
 .angebot-features li{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--text-mid)}
@@ -141,13 +142,13 @@ section{padding:100px 80px}
 .atmo-img:hover img{transform:scale(1.05)}
 
 /* === 7. TESTIMONIALS === */
-#testimonials{background:var(--cream)}
+#testimonials{background:var(--sage-pale)}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
 .testi-card{background:var(--warm-white);border-radius:var(--r);padding:36px 32px;border:1px solid var(--border);text-align:center;transition:transform .3s}
 .testi-card:hover{transform:translateY(-3px)}
 .testi-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--text-dark);line-height:1.5;margin-bottom:20px}
 .testi-name{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light)}
-.testi-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.testi-stars{color:var(--sage);font-size:14px;letter-spacing:2px;margin-bottom:12px}
 
 /* === 8. EINWÄNDE === */
 #einwaende{background:var(--warm-white)}
@@ -162,9 +163,10 @@ section{padding:100px 80px}
 .faq-a p{font-size:14px;color:var(--text-mid);line-height:1.7}
 
 /* === 9. RISIKO-UMKEHR === */
-#risiko{background:var(--sage-pale);text-align:center;padding:72px 24px}
+#risiko{background:var(--sage-muted);text-align:center;padding:72px 24px}
 .risiko-box{max-width:600px;margin:0 auto}
-.risiko-box h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,40px);font-weight:300;margin-bottom:16px}
+.risiko-box h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,40px);font-weight:300;margin-bottom:16px;color:var(--sage)}
+.risiko-box h2 em{font-style:italic;color:var(--sage)}
 .risiko-box p{font-size:16px;color:var(--text-mid);line-height:1.7}
 
 /* === 10. PREISE === */
@@ -204,7 +206,7 @@ section{padding:100px 80px}
 .btn-final:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.15)}
 
 /* === EVENTS (DARK) === */
-.events-transition-in{height:120px;background:linear-gradient(180deg,var(--cream) 0%,var(--dark) 100%)}
+.events-transition-in{height:120px;background:linear-gradient(180deg,var(--sage-pale) 0%,var(--dark) 100%)}
 .events-transition-out{height:120px;background:linear-gradient(180deg,var(--dark) 0%,var(--warm-white) 100%)}
 #events{background:var(--dark);padding:60px 80px 80px;position:relative;overflow:hidden}
 #events::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(200,149,108,.08) 0%,transparent 60%);pointer-events:none}
@@ -239,21 +241,21 @@ section{padding:100px 80px}
 .no-events-dark{text-align:center;padding:60px;color:rgba(255,255,255,.4);font-size:15px}
 
 /* === 12. FAQ === */
-#faq{background:var(--cream)}
+#faq{background:var(--sage-pale)}
 
 /* === KONTAKT === */
 #kontakt{background:var(--warm-white);text-align:center}
 .kontakt-grid{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;margin:40px 0 56px}
 .kontakt-item{text-align:center}
-.kontakt-icon{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;background:var(--cream);border:1px solid var(--border);transition:all .3s}
-.kontakt-item:hover .kontakt-icon{transform:translateY(-3px);box-shadow:var(--shadow)}
+.kontakt-icon{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;background:var(--sage-pale);border:2px solid var(--sage-muted);transition:all .3s}
+.kontakt-item:hover .kontakt-icon{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--sage)}
 .kontakt-item h3{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:6px}
 .kontakt-item p{font-size:13px;color:var(--text-mid);line-height:1.6}
 .kontakt-item a{color:var(--sage);text-decoration:none;transition:color .2s}
 .kontakt-item a:hover{color:var(--gold)}
 
 /* === FOOTER === */
-footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:56px}
+footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:56px;border-top:3px solid var(--sage)}
 .footer-brand .brand-small{font-size:9px;letter-spacing:5px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px}
 .footer-brand .brand-big{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;letter-spacing:6px;color:var(--text-mid);margin-bottom:16px}
 .footer-brand p{font-size:13px;line-height:1.8;color:var(--text-light);max-width:280px}
@@ -287,7 +289,9 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   .nav-cta{display:none}
   .nav-left,.nav-right{flex:0}
   .nav-center{flex:1;display:flex;justify-content:flex-start}
-  .nav-logo-img{height:44px;width:44px}
+  .nav-logo-img{height:64px;width:64px;margin:-10px 0}
+  nav.scrolled .nav-logo-img{height:50px;width:50px;margin:-6px 0}
+  .nav-logo-fallback{width:58px;height:58px;margin:-8px 0}
   section{padding:56px 20px}
   #hero{padding:100px 20px 64px;min-height:90vh}
   .hero-content h1{font-size:32px}
