@@ -325,8 +325,8 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   <div class="nav-left"><ul class="nav-links"><li><a href="#loesung">Über mich</a></li><li><a href="#angebote">Angebote</a></li><li><a href="#events">Events</a></li></ul></div>
   <div class="nav-center">
     <a href="#" class="nav-logo">
-      <img src="Logo.jpg" alt="Gabi Yoga" class="nav-logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="nav-logo-fallback" style="display:none"><span>GABI</span><span>YOGA</span></div>
+      <img src="" alt="Gabi Yoga" class="nav-logo-img" id="nav-logo-img" style="display:none" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="nav-logo-fallback" id="nav-logo-fallback"><span>GABI</span><span>YOGA</span></div>
     </a>
   </div>
   <div class="nav-right"><ul class="nav-links"><li><a href="#preise">Preise</a></li><li><a href="#kontakt">Kontakt</a></li></ul><a href="#preise" class="nav-cta">Platz sichern</a></div>
@@ -346,10 +346,10 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   <div class="hero-bg" id="hero-bg"><div class="hero-bg-placeholder"></div></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <h1 id="hero-headline">Du funktionierst nur noch… <em>statt wirklich zu leben?</em></h1>
+    <h1 id="hero-headline">Du funktionierst nur noch… <em id="hero-headline-em">statt wirklich zu leben?</em></h1>
     <p id="hero-sub">Finde in nur 60 Minuten zurück zu Ruhe, Leichtigkeit und einem Körper, der sich endlich wieder gut anfühlt.</p>
-    <a href="#preise" class="btn-hero">Jetzt Platz sichern</a>
-    <div class="hero-trust">Anfängerfreundlich · Kein Leistungsdruck · Vor Ort in Wermelskirchen</div>
+    <a href="#preise" class="btn-hero" id="hero-cta">Jetzt Platz sichern</a>
+    <div class="hero-trust" id="hero-trust">Anfängerfreundlich · Kein Leistungsdruck · Vor Ort in Wermelskirchen</div>
   </div>
 </section>
 
@@ -358,10 +358,10 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   <div class="container">
     <div class="problem-grid">
       <div class="problem-text fade-up">
-        <h2>Dein Alltag hört <em>nie</em> auf.</h2>
-        <p>Termine. Verantwortung. Druck.<br>Dein Kopf läuft ständig weiter – selbst wenn du endlich Zeit hast.</p>
-        <p>Dein Körper? Verspannt. Müde. Schwer.</p>
-        <p class="highlight">Und egal was du versuchst… du kommst einfach nicht runter.</p>
+        <h2 id="problem-title">Dein Alltag hört <em id="problem-title-em">nie</em> auf.</h2>
+        <p id="problem-text1">Termine. Verantwortung. Druck.<br>Dein Kopf läuft ständig weiter – selbst wenn du endlich Zeit hast.</p>
+        <p id="problem-text2">Dein Körper? Verspannt. Müde. Schwer.</p>
+        <p class="highlight" id="problem-highlight">Und egal was du versuchst… du kommst einfach nicht runter.</p>
       </div>
       <div class="problem-img fade-up delay-1" id="problem-img">📸 Bild: Stress</div>
     </div>
@@ -371,9 +371,9 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
 <!-- 3. BELIEF BREAK -->
 <section id="belief">
   <div class="container fade-up">
-    <p>Die meisten glauben, sie brauchen mehr Disziplin.<br>Mehr Motivation. Mehr Zeit.</p>
+    <p id="belief-text">Die meisten glauben, sie brauchen mehr Disziplin.<br>Mehr Motivation. Mehr Zeit.</p>
     <div class="wrong">❌ Falsch.</div>
-    <p class="conclusion">Dein Körper ist im Dauer-Stressmodus gefangen.<br>Und genau deshalb kannst du nicht abschalten.</p>
+    <p class="conclusion" id="belief-conclusion">Dein Körper ist im Dauer-Stressmodus gefangen.<br>Und genau deshalb kannst du nicht abschalten.</p>
   </div>
 </section>
 
@@ -387,9 +387,9 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
         <h2 id="ueber-name">Genau hier setzt <em>mein Yoga</em> an.</h2>
         <p class="intro" id="ueber-text1">Kein kompliziertes Esoterik-Zeug. Kein Leistungsdruck. Sondern einfache Übungen, die deinen Körper und Geist wieder in Balance bringen.</p>
         <ul class="check-list">
-          <li>Deinen Körper lösen</li>
-          <li>Dein Nervensystem beruhigen</li>
-          <li>Deinen Kopf endlich leise machen</li>
+          <li id="ueber-check1">Deinen Körper lösen</li>
+          <li id="ueber-check2">Dein Nervensystem beruhigen</li>
+          <li id="ueber-check3">Deinen Kopf endlich leise machen</li>
         </ul>
         <p class="intro" style="margin-top:24px" id="ueber-text2">Seit vielen Jahren begleite ich Menschen auf ihrer Yoga-Reise – mit viel Herz, Humor und dem tiefen Glauben, dass Yoga für jede und jeden ist.</p>
       </div>
@@ -408,14 +408,14 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
     <!-- Angebot Box -->
     <div class="angebot-box fade-up">
       <p class="section-label">Das bekommst du</p>
-      <h3>🧘‍♀️ Yoga vor Ort</h3>
+      <h3 id="angebot-title">🧘‍♀️ Yoga vor Ort</h3>
       <ul class="angebot-features">
-        <li>60 Minuten geführte Praxis</li>
-        <li>Ideal für Frauen 30–50</li>
-        <li>Fokus: Entspannung & Körpergefühl</li>
-        <li>Kleine Gruppen, persönliche Betreuung</li>
+        <li id="angebot-f1">60 Minuten geführte Praxis</li>
+        <li id="angebot-f2">Ideal für Frauen 30–50</li>
+        <li id="angebot-f3">Fokus: Entspannung & Körpergefühl</li>
+        <li id="angebot-f4">Kleine Gruppen, persönliche Betreuung</li>
       </ul>
-      <p class="angebot-result">Du gehst raus und fühlst dich: ruhiger · leichter · klarer</p>
+      <p class="angebot-result" id="angebot-result">Du gehst raus und fühlst dich: ruhiger · leichter · klarer</p>
     </div>
   </div>
 </section>
@@ -425,10 +425,10 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
   <div class="container">
     <div class="fade-up" style="text-align:center">
       <p class="section-label">Atmosphäre</p>
-      <h2 class="section-title">Kein Druck. Kein Vergleichen.<br><em>Nur ein Raum, in dem du loslassen kannst.</em></h2>
+      <h2 class="section-title" id="atmo-title">Kein Druck. Kein Vergleichen.<br><em>Nur ein Raum, in dem du loslassen kannst.</em></h2>
     </div>
     <div class="atmo-gallery" id="atmo-gallery">
-      <div class="atmo-img" id="ueber-img2">📸</div>
+      <div class="atmo-img" id="atmo-img1">📸</div>
       <div class="atmo-img" id="atmo-img2">📸</div>
       <div class="atmo-img" id="atmo-img3">📸</div>
       <div class="atmo-img" id="atmo-img4">📸</div>
@@ -446,18 +446,18 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
     <div class="testi-grid">
       <div class="testi-card fade-up">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">„Ich konnte zum ersten Mal seit Monaten wirklich abschalten."</p>
-        <span class="testi-name">— Lisa M.</span>
+        <p class="testi-quote" id="testi1-quote">„Ich konnte zum ersten Mal seit Monaten wirklich abschalten."</p>
+        <span class="testi-name" id="testi1-name">— Lisa M.</span>
       </div>
       <div class="testi-card fade-up delay-1">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">„Mein Rücken fühlt sich endlich wieder frei an."</p>
-        <span class="testi-name">— Sandra K.</span>
+        <p class="testi-quote" id="testi2-quote">„Mein Rücken fühlt sich endlich wieder frei an."</p>
+        <span class="testi-name" id="testi2-name">— Sandra K.</span>
       </div>
       <div class="testi-card fade-up delay-2">
         <div class="testi-stars">★★★★★</div>
-        <p class="testi-quote">„Ich gehe jedes Mal leichter nach Hause."</p>
-        <span class="testi-name">— Julia R.</span>
+        <p class="testi-quote" id="testi3-quote">„Ich gehe jedes Mal leichter nach Hause."</p>
+        <span class="testi-name" id="testi3-name">— Julia R.</span>
       </div>
     </div>
   </div>
@@ -470,10 +470,10 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
       <p class="section-label">Ganz ehrlich</p>
       <h2 class="section-title">Noch <em>unsicher?</em></h2>
     </div>
-    <div class="faq-list">
-      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)">„Ich bin nicht flexibel genug"</div><div class="faq-a"><p>Perfekt. Genau dafür ist es da. Yoga ist kein Wettkampf – du wirst genau dort abgeholt, wo du stehst. Jede Übung wird so angepasst, dass sie zu dir passt.</p></div></div>
-      <div class="faq-item fade-up delay-1"><div class="faq-q" onclick="toggleFaq(this)">„Ich habe noch nie Yoga gemacht"</div><div class="faq-a"><p>Umso besser! Du wirst Schritt für Schritt geführt und musst nichts können. Die meisten meiner Teilnehmerinnen haben als komplette Anfängerinnen begonnen.</p></div></div>
-      <div class="faq-item fade-up delay-2"><div class="faq-q" onclick="toggleFaq(this)">„Ich habe keine Zeit"</div><div class="faq-a"><p>Genau deshalb brauchst du es. 60 Minuten nur für dich – keine To-Do-Liste, keine Verantwortung. Dein Körper und dein Kopf werden es dir danken.</p></div></div>
+    <div class="faq-list" id="einwaende-list">
+      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)" id="einwand1-q">„Ich bin nicht flexibel genug"</div><div class="faq-a"><p id="einwand1-a">Perfekt. Genau dafür ist es da. Yoga ist kein Wettkampf – du wirst genau dort abgeholt, wo du stehst. Jede Übung wird so angepasst, dass sie zu dir passt.</p></div></div>
+      <div class="faq-item fade-up delay-1"><div class="faq-q" onclick="toggleFaq(this)" id="einwand2-q">„Ich habe noch nie Yoga gemacht"</div><div class="faq-a"><p id="einwand2-a">Umso besser! Du wirst Schritt für Schritt geführt und musst nichts können. Die meisten meiner Teilnehmerinnen haben als komplette Anfängerinnen begonnen.</p></div></div>
+      <div class="faq-item fade-up delay-2"><div class="faq-q" onclick="toggleFaq(this)" id="einwand3-q">„Ich habe keine Zeit"</div><div class="faq-a"><p id="einwand3-a">Genau deshalb brauchst du es. 60 Minuten nur für dich – keine To-Do-Liste, keine Verantwortung. Dein Körper und dein Kopf werden es dir danken.</p></div></div>
     </div>
   </div>
 </section>
@@ -482,8 +482,8 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
 <section id="risiko">
   <div class="risiko-box fade-up">
     <p class="section-label">Versprechen</p>
-    <h2>Teste es <em>ohne Risiko.</em></h2>
-    <p>Wenn du dich nach der ersten Stunde nicht besser fühlst, bekommst du dein Geld zurück. Ohne Wenn und Aber.</p>
+    <h2 id="risiko-title">Teste es <em>ohne Risiko.</em></h2>
+    <p id="risiko-text">Wenn du dich nach der ersten Stunde nicht besser fühlst, bekommst du dein Geld zurück. Ohne Wenn und Aber.</p>
   </div>
 </section>
 
@@ -502,9 +502,9 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
 <!-- 11. FINAL CTA -->
 <section id="final-cta">
   <div class="container fade-up">
-    <p class="notice">Die Plätze sind bewusst begrenzt</p>
-    <h2>Sichere dir jetzt deinen Platz und spüre schon nach der <em>ersten Stunde</em> den Unterschied.</h2>
-    <a href="#preise" class="btn-final">Jetzt buchen</a>
+    <p class="notice" id="cta-notice">Die Plätze sind bewusst begrenzt</p>
+    <h2 id="cta-title">Sichere dir jetzt deinen Platz und spüre schon nach der <em>ersten Stunde</em> den Unterschied.</h2>
+    <a href="#preise" class="btn-final" id="cta-button">Jetzt buchen</a>
   </div>
 </section>
 
@@ -528,11 +528,11 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
       <p class="section-label">FAQ</p>
       <h2 class="section-title">Häufige <em>Fragen</em></h2>
     </div>
-    <div class="faq-list">
-      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)">Muss ich Erfahrung haben?</div><div class="faq-a"><p>Nein! Meine Kurse sind für alle Level geeignet – besonders für Anfängerinnen. Du wirst Schritt für Schritt angeleitet.</p></div></div>
-      <div class="faq-item fade-up delay-1"><div class="faq-q" onclick="toggleFaq(this)">Was soll ich mitbringen?</div><div class="faq-a"><p>Bequeme Kleidung und etwas zu trinken. Matten und Hilfsmittel sind vor Ort vorhanden.</p></div></div>
-      <div class="faq-item fade-up delay-2"><div class="faq-q" onclick="toggleFaq(this)">Wie buche ich?</div><div class="faq-a"><p>Klicke einfach auf „Platz sichern" und wähle dein Ticket. Du kannst per PayPal oder Stripe bezahlen, oder schreib mir direkt per WhatsApp.</p></div></div>
-      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)">Wo findet der Kurs statt?</div><div class="faq-a"><p>In Wermelskirchen und Umgebung. Den genauen Ort teile ich dir nach der Buchung mit.</p></div></div>
+    <div class="faq-list" id="faq-list">
+      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)" id="faq1-q">Muss ich Erfahrung haben?</div><div class="faq-a"><p id="faq1-a">Nein! Meine Kurse sind für alle Level geeignet – besonders für Anfängerinnen. Du wirst Schritt für Schritt angeleitet.</p></div></div>
+      <div class="faq-item fade-up delay-1"><div class="faq-q" onclick="toggleFaq(this)" id="faq2-q">Was soll ich mitbringen?</div><div class="faq-a"><p id="faq2-a">Bequeme Kleidung und etwas zu trinken. Matten und Hilfsmittel sind vor Ort vorhanden.</p></div></div>
+      <div class="faq-item fade-up delay-2"><div class="faq-q" onclick="toggleFaq(this)" id="faq3-q">Wie buche ich?</div><div class="faq-a"><p id="faq3-a">Klicke einfach auf „Platz sichern" und wähle dein Ticket. Du kannst per PayPal oder Stripe bezahlen, oder schreib mir direkt per WhatsApp.</p></div></div>
+      <div class="faq-item fade-up"><div class="faq-q" onclick="toggleFaq(this)" id="faq4-q">Wo findet der Kurs statt?</div><div class="faq-a"><p id="faq4-a">In Wermelskirchen und Umgebung. Den genauen Ort teile ich dir nach der Buchung mit.</p></div></div>
     </div>
   </div>
 </section>
@@ -580,6 +580,7 @@ const db=getFirestore(app);
 const dynObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')})},{threshold:.1});
 
 function setText(id,v){const el=document.getElementById(id);if(el&&v)el.textContent=v}
+function setHtml(id,v){const el=document.getElementById(id);if(el&&v)el.innerHTML=v}
 function setImg(id,url){const el=document.getElementById(id);if(el&&url)el.innerHTML=`<img src="${url}" alt="" loading="lazy">`}
 
 function isVideoUrl(url){return url&&(/\.(mp4|webm|ogg|mov)(\?|$)/i.test(url)||url.includes("/video/upload/"))}
@@ -589,11 +590,16 @@ async function loadContent(){
     const snap=await getDoc(doc(db,"content","main"));
     if(!snap.exists())return;
     const d=snap.data();
+
     // Logo from Cloudinary
-    if(d.logoUrl){
-      const logoImg=document.querySelector(".nav-logo-img");
-      if(logoImg){logoImg.src=d.logoUrl;logoImg.onerror=function(){this.style.display="none";this.nextElementSibling.style.display="flex"}}
+    const logoImg=document.getElementById("nav-logo-img");
+    const logoFallback=document.getElementById("nav-logo-fallback");
+    if(d.logoUrl&&logoImg){
+      logoImg.onload=function(){this.style.display="block";if(logoFallback)logoFallback.style.display="none"};
+      logoImg.onerror=function(){this.style.display="none";if(logoFallback)logoFallback.style.display="flex"};
+      logoImg.src=d.logoUrl;
     }
+
     // Hero: video or image
     if(d.heroImg){
       const heroBg=document.getElementById("hero-bg");
@@ -603,11 +609,86 @@ async function loadContent(){
         heroBg.innerHTML=`<img src="${d.heroImg}" alt="" style="width:100%;height:100%;object-fit:cover">`
       }
     }
-    setText("hero-label",d.heroLabel);
+
+    // Hero texts
+    if(d.heroHeadline){
+      const hh=document.getElementById("hero-headline");
+      const em=document.getElementById("hero-headline-em");
+      if(hh){hh.childNodes[0].textContent=d.heroHeadline+" "}
+      if(em&&d.heroHeadlineEm)em.textContent=d.heroHeadlineEm;
+    }
+    setText("hero-sub",d.heroSub);
+    setText("hero-cta",d.heroCta);
+    setText("hero-trust",d.heroTrust);
+
+    // Problem section
+    if(d.problemTitle){
+      const pt=document.getElementById("problem-title");
+      if(pt){pt.childNodes[0].textContent=d.problemTitle+" "}
+      const pe=document.getElementById("problem-title-em");
+      if(pe&&d.problemTitleEm)pe.textContent=d.problemTitleEm;
+    }
+    setText("problem-text1",d.problemText1);
+    setText("problem-text2",d.problemText2);
+    setText("problem-highlight",d.problemHighlight);
+    setImg("problem-img",d.problemImg);
+
+    // Belief
+    if(d.beliefText)setHtml("belief-text",d.beliefText);
+    if(d.beliefConclusion)setHtml("belief-conclusion",d.beliefConclusion);
+
+    // Über mich / Lösung
     setText("ueber-text1",d.ueberText1);
     setText("ueber-text2",d.ueberText2);
+    setText("ueber-check1",d.ueberCheck1);
+    setText("ueber-check2",d.ueberCheck2);
+    setText("ueber-check3",d.ueberCheck3);
     setImg("ueber-img1",d.ueberImg1);
-    setImg("ueber-img2",d.ueberImg2);
+
+    // Angebot box
+    setText("angebot-title",d.angebotTitle);
+    setText("angebot-f1",d.angebotF1);
+    setText("angebot-f2",d.angebotF2);
+    setText("angebot-f3",d.angebotF3);
+    setText("angebot-f4",d.angebotF4);
+    setText("angebot-result",d.angebotResult);
+
+    // Atmosphäre
+    if(d.atmoTitle){const at=document.getElementById("atmo-title");if(at)at.innerHTML=d.atmoTitle}
+    setImg("atmo-img1",d.atmoImg1||d.ueberImg2);
+    setImg("atmo-img2",d.atmoImg2);
+    setImg("atmo-img3",d.atmoImg3);
+    setImg("atmo-img4",d.atmoImg4);
+
+    // Testimonials
+    setText("testi1-quote",d.testi1Quote);
+    setText("testi1-name",d.testi1Name);
+    setText("testi2-quote",d.testi2Quote);
+    setText("testi2-name",d.testi2Name);
+    setText("testi3-quote",d.testi3Quote);
+    setText("testi3-name",d.testi3Name);
+
+    // Einwände
+    setText("einwand1-q",d.einwand1Q);
+    setText("einwand1-a",d.einwand1A);
+    setText("einwand2-q",d.einwand2Q);
+    setText("einwand2-a",d.einwand2A);
+    setText("einwand3-q",d.einwand3Q);
+    setText("einwand3-a",d.einwand3A);
+
+    // Risiko
+    if(d.risikoTitle){const rt=document.getElementById("risiko-title");if(rt)rt.innerHTML=d.risikoTitle}
+    setText("risiko-text",d.risikoText);
+
+    // Final CTA
+    setText("cta-notice",d.ctaNotice);
+    if(d.ctaTitle){const ct=document.getElementById("cta-title");if(ct)ct.innerHTML=d.ctaTitle}
+    setText("cta-button",d.ctaButton);
+
+    // Preise
+    setText("preise-subtitle",d.preiseSubtitle);
+
+    // Kontakt
     setText("kontakt-text",d.kontaktText);
     const emailEl=document.getElementById("kontakt-email-link");
     if(emailEl&&d.email){emailEl.textContent=d.email;emailEl.href=`mailto:${d.email}`}
@@ -615,8 +696,9 @@ async function loadContent(){
     if(waEl&&d.whatsapp)waEl.href=`https://wa.me/${d.whatsapp.replace(/\D/g,"")}`;
     const igEl=document.getElementById("kontakt-instagram-link");
     if(igEl&&d.instagram){igEl.href=d.instagram;igEl.textContent="@"+d.instagram.split("/").filter(Boolean).pop()}
+
+    // Footer
     setText("footer-text",d.footerText);
-    setText("preise-subtitle",d.preiseSubtitle);
   }catch(e){console.error(e)}
 }
 
