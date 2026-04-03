@@ -107,8 +107,14 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
 .img-upload-area:hover { border-color:var(--sage); background:var(--bg); }
 .img-upload-area input { display:none; }
 .img-preview { max-width:100%; max-height:160px; border-radius:6px; margin-top:12px; display:none; }
+.video-preview { max-width:100%; max-height:160px; border-radius:6px; margin-top:12px; display:none; }
 .img-upload-label { font-size:12px; color:var(--text-light); letter-spacing:1px; }
 .img-upload-label span { font-size:24px; display:block; margin-bottom:6px; }
+.media-type-badge { display:inline-block; font-size:10px; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:12px; margin-top:8px; }
+.media-type-badge.video { background:#e05c5c22; color:#e05c5c; }
+.media-type-badge.image { background:var(--sage)22; color:var(--sage); }
+.existing-media { margin-top:8px; font-size:11px; color:var(--text-light); display:flex; align-items:center; gap:6px; }
+.existing-media a { color:var(--sage); text-decoration:none; }
 
 /* BUTTONS */
 .btn-save {
@@ -225,7 +231,21 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
       <div class="tab-panel active" id="tab-allgemein">
         <h2 class="panel-title">Allgemein & <em>Hero</em></h2>
         <div class="card">
-          <div class="card-title">Hauptbild & Headline</div>
+          <div class="card-title">Logo</div>
+          <div class="field">
+            <label>Logo hochladen (wird im Header angezeigt)</label>
+            <div class="img-upload-area" onclick="document.getElementById('logoFile').click()">
+              <input type="file" id="logoFile" accept="image/*" onchange="previewMedia(this,'logoPreview','logoUrl')">
+              <div class="img-upload-label"><span>🪷</span>Logo auswählen</div>
+              <img id="logoPreview" class="img-preview">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveContent()">Speichern</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Hauptbild / Video & Headline</div>
           <div class="field">
             <label>Label (klein, über Titel)</label>
             <input type="text" id="heroLabel" placeholder="z.B. Yoga mit Herz & Seele">
@@ -237,7 +257,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
           <div class="field">
             <label>Hauptbild</label>
             <div class="img-upload-area" onclick="document.getElementById('heroImgFile').click()">
-              <input type="file" id="heroImgFile" accept="image/*" onchange="previewImg(this,'heroImgPreview','heroImgUrl')">
+              <input type="file" id="heroImgFile" accept="image/*,video/*" onchange="previewImg(this,'heroImgPreview','heroImgUrl')">
               <div class="img-upload-label"><span>🖼️</span>Klicken zum Hochladen</div>
               <img id="heroImgPreview" class="img-preview">
             </div>
@@ -289,7 +309,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
             <div class="field">
               <label>Foto 1 (groß)</label>
               <div class="img-upload-area" onclick="document.getElementById('ueberImg1File').click()">
-                <input type="file" id="ueberImg1File" accept="image/*" onchange="previewImg(this,'ueberImg1Preview','ueberImg1')">
+                <input type="file" id="ueberImg1File" accept="image/*,video/*" onchange="previewImg(this,'ueberImg1Preview','ueberImg1')">
                 <div class="img-upload-label"><span>📸</span>Hochladen</div>
                 <img id="ueberImg1Preview" class="img-preview">
               </div>
@@ -297,7 +317,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
             <div class="field">
               <label>Foto 2 (klein)</label>
               <div class="img-upload-area" onclick="document.getElementById('ueberImg2File').click()">
-                <input type="file" id="ueberImg2File" accept="image/*" onchange="previewImg(this,'ueberImg2Preview','ueberImg2')">
+                <input type="file" id="ueberImg2File" accept="image/*,video/*" onchange="previewImg(this,'ueberImg2Preview','ueberImg2')">
                 <div class="img-upload-label"><span>📸</span>Hochladen</div>
                 <img id="ueberImg2Preview" class="img-preview">
               </div>
@@ -365,7 +385,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
               <div class="field">
                 <label>Bild 1</label>
                 <div class="img-upload-area" onclick="document.getElementById('eventImg1File').click()">
-                  <input type="file" id="eventImg1File" accept="image/*" onchange="previewImg(this,'eventImg1Preview','eventImg1Url')">
+                  <input type="file" id="eventImg1File" accept="image/*,video/*" onchange="previewImg(this,'eventImg1Preview','eventImg1Url')">
                   <div class="img-upload-label"><span>📸</span>Hochladen</div>
                   <img id="eventImg1Preview" class="img-preview">
                 </div>
@@ -373,7 +393,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
               <div class="field">
                 <label>Bild 2</label>
                 <div class="img-upload-area" onclick="document.getElementById('eventImg2File').click()">
-                  <input type="file" id="eventImg2File" accept="image/*" onchange="previewImg(this,'eventImg2Preview','eventImg2Url')">
+                  <input type="file" id="eventImg2File" accept="image/*,video/*" onchange="previewImg(this,'eventImg2Preview','eventImg2Url')">
                   <div class="img-upload-label"><span>📸</span>Hochladen</div>
                   <img id="eventImg2Preview" class="img-preview">
                 </div>
@@ -489,7 +509,9 @@ async function uploadToCloudinary(file) {
   const fd = new FormData();
   fd.append("file", file);
   fd.append("upload_preset", CLOUDINARY_PRESET);
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`, {
+  const isVideo = file.type && file.type.startsWith("video/");
+  const endpoint = isVideo ? "video" : "image";
+  const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/${endpoint}/upload`, {
     method: "POST", body: fd
   });
   if (!res.ok) throw new Error("Cloudinary Upload fehlgeschlagen");
@@ -551,20 +573,64 @@ function toast(msg, isError=false) {
   setTimeout(() => t.className = "toast", 3000);
 }
 
-// ── IMAGE UPLOAD ──
-window.previewImg = function(input, previewId, urlKey) {
+// ── MEDIA UPLOAD (Image + Video) ──
+function isVideoFile(file) {
+  return file && file.type && file.type.startsWith("video/");
+}
+function isVideoUrl(url) {
+  if (!url) return false;
+  return /\.(mp4|webm|ogg|mov)(\?|$)/i.test(url) || url.includes("/video/upload/");
+}
+
+window.previewMedia = function(input, previewId, urlKey) {
   const file = input.files[0];
   if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    const prev = document.getElementById(previewId);
-    prev.src = e.target.result;
-    prev.style.display = "block";
-  };
-  reader.readAsDataURL(file);
+  const container = document.getElementById(previewId).parentElement;
+  // Remove old preview elements
+  container.querySelectorAll(".img-preview,.video-preview,.media-type-badge").forEach(el => el.remove());
+
+  if (isVideoFile(file)) {
+    const vid = document.createElement("video");
+    vid.className = "video-preview";
+    vid.controls = true; vid.muted = true; vid.style.display = "block";
+    vid.src = URL.createObjectURL(file);
+    container.appendChild(vid);
+    const badge = document.createElement("span");
+    badge.className = "media-type-badge video"; badge.textContent = "VIDEO";
+    container.appendChild(badge);
+  } else {
+    const img = document.createElement("img");
+    img.className = "img-preview"; img.style.display = "block";
+    const reader = new FileReader();
+    reader.onload = e => { img.src = e.target.result; };
+    reader.readAsDataURL(file);
+    container.appendChild(img);
+    const badge = document.createElement("span");
+    badge.className = "media-type-badge image"; badge.textContent = "BILD";
+    container.appendChild(badge);
+  }
   window._uploadedFiles = window._uploadedFiles || {};
   window._uploadedFiles[urlKey] = file;
 };
+// Keep old name as alias
+window.previewImg = window.previewMedia;
+
+function showExistingPreview(previewId, url) {
+  const el = document.getElementById(previewId);
+  if (!el || !url) return;
+  const container = el.parentElement;
+  if (isVideoUrl(url)) {
+    const vid = document.createElement("video");
+    vid.className = "video-preview"; vid.controls = true; vid.muted = true;
+    vid.style.display = "block"; vid.src = url;
+    container.appendChild(vid);
+    const badge = document.createElement("span");
+    badge.className = "media-type-badge video"; badge.textContent = "VIDEO";
+    container.appendChild(badge);
+  } else {
+    el.src = url; el.style.display = "block";
+  }
+}
 
 // ── LOAD ALL ──
 async function loadAll() {
@@ -585,15 +651,17 @@ async function loadContentForm() {
     if(d.email) document.getElementById("kontaktEmail").value = d.email;
     if(d.whatsapp) document.getElementById("kontaktWhatsapp").value = d.whatsapp;
     if(d.instagram) document.getElementById("kontaktInstagram").value = d.instagram;
-    // show existing images
-    ["heroImgUrl","ueberImg1","ueberImg2"].forEach(k => {
-      if(d[k]) { window._uploadedUrls[k] = d[k]; }
-    });
+    // show existing media (logo, hero, ueber images)
+    if(d.heroImg) { window._uploadedUrls["heroImgUrl"] = d.heroImg; showExistingPreview("heroImgPreview", d.heroImg); }
+    if(d.logoUrl) { window._uploadedUrls["logoUrl"] = d.logoUrl; showExistingPreview("logoPreview", d.logoUrl); }
+    if(d.ueberImg1) { window._uploadedUrls["ueberImg1"] = d.ueberImg1; showExistingPreview("ueberImg1Preview", d.ueberImg1); }
+    if(d.ueberImg2) { window._uploadedUrls["ueberImg2"] = d.ueberImg2; showExistingPreview("ueberImg2Preview", d.ueberImg2); }
   } catch(e) {}
 }
 
 window.saveContent = async function() {
   try {
+    const logoUrl = await uploadFile("logoUrl") || window._uploadedUrls["logoUrl"] || null;
     const heroImgUrl = await uploadFile("heroImgUrl") || window._uploadedUrls["heroImgUrl"] || null;
     const ueberImg1 = await uploadFile("ueberImg1") || window._uploadedUrls["ueberImg1"] || null;
     const ueberImg2 = await uploadFile("ueberImg2") || window._uploadedUrls["ueberImg2"] || null;
@@ -606,6 +674,7 @@ window.saveContent = async function() {
       kontaktText: v("kontaktText"),
       email: v("kontaktEmail"), whatsapp: v("kontaktWhatsapp"), instagram: v("kontaktInstagram"),
     };
+    if(logoUrl) data.logoUrl = logoUrl;
     if(heroImgUrl) data.heroImg = heroImgUrl;
     if(ueberImg1) data.ueberImg1 = ueberImg1;
     if(ueberImg2) data.ueberImg2 = ueberImg2;
