@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gabi Sieckendieck Yoga</title>
+<meta name="description" content="Yoga mit Herz & Seele in Wermelskirchen – Hatha, Vinyasa, Yin Yoga für alle Level. Kurse, Events & Workshops mit Gabi Sieckendieck.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -12,80 +14,160 @@
   --warm-white: #fdfcfa;
   --sage: #7a8c72;
   --sage-light: #a3b09a;
+  --sage-pale: #e8ede5;
   --gold: #c8956c;
   --gold-light: #ddb08a;
+  --gold-pale: #f5ece3;
   --text-dark: #2d2d2d;
   --text-mid: #6b6b6b;
   --text-light: #9a9a9a;
   --border: #e8e2d9;
+  --shadow-sm: 0 2px 12px rgba(0,0,0,0.04);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.06);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.08);
+  --radius: 16px;
+  --radius-sm: 10px;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { font-family:'Jost',sans-serif; background:var(--warm-white); color:var(--text-dark); font-weight:300; }
+body { font-family:'Jost',sans-serif; background:var(--warm-white); color:var(--text-dark); font-weight:300; overflow-x:hidden; }
+
+/* SCROLL ANIMATIONS */
+.fade-up {
+  opacity:0; transform:translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-up.visible {
+  opacity:1; transform:translateY(0);
+}
 
 /* NAV */
 nav {
   position:fixed; top:0; left:0; right:0; z-index:100;
   display:flex; align-items:center; justify-content:space-between;
-  padding:20px 48px;
-  background:rgba(253,252,250,0.93);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
+  padding:16px 48px;
+  background:rgba(253,252,250,0.92);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(232,226,217,0.6);
+  transition: padding 0.3s, box-shadow 0.3s;
+}
+nav.scrolled {
+  padding:10px 48px;
+  box-shadow: 0 1px 20px rgba(0,0,0,0.06);
 }
 .nav-logo { display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--text-dark); }
 .logo-circle {
-  width:52px; height:52px; border:1.5px solid var(--sage); border-radius:50%;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px;
+  width:48px; height:48px; border:1.5px solid var(--sage); border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0;
+  transition: transform 0.3s;
 }
-.logo-circle span:first-child { font-size:7px; letter-spacing:3px; color:var(--sage); font-weight:400; text-transform:uppercase; }
-.logo-circle span:last-child { font-family:'Cormorant Garamond',serif; font-size:16px; color:var(--sage); font-weight:600; }
+.nav-logo:hover .logo-circle { transform:scale(1.05); }
+.logo-circle span:first-child { font-size:7px; letter-spacing:2.5px; color:var(--sage); font-weight:400; text-transform:uppercase; line-height:1.2; }
+.logo-circle span:last-child { font-family:'Cormorant Garamond',serif; font-size:15px; color:var(--sage); font-weight:600; line-height:1; }
 .nav-links { display:flex; gap:36px; list-style:none; }
-.nav-links a { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-mid); text-decoration:none; font-weight:400; transition:color .2s; }
+.nav-links a {
+  font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-mid);
+  text-decoration:none; font-weight:400; transition:color .2s;
+  position:relative;
+}
+.nav-links a::after {
+  content:''; position:absolute; bottom:-4px; left:0; width:0;
+  height:1px; background:var(--sage); transition: width 0.3s;
+}
 .nav-links a:hover { color:var(--text-dark); }
-.nav-cta { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--sage); text-decoration:none; border-bottom:1px solid var(--sage); padding-bottom:2px; transition:color .2s, border-color .2s; }
-.nav-cta:hover { color:var(--gold); border-color:var(--gold); }
+.nav-links a:hover::after { width:100%; }
+.nav-cta {
+  font-size:11px; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--warm-white); background:var(--sage); text-decoration:none;
+  padding:10px 24px; border-radius:24px;
+  transition: background .25s, transform .2s;
+}
+.nav-cta:hover { background:var(--sage-light); transform:translateY(-1px); }
+
+/* HAMBURGER */
+.nav-hamburger {
+  display:none; background:none; border:none; cursor:pointer; padding:4px;
+  flex-direction:column; gap:5px; z-index:110;
+}
+.nav-hamburger span {
+  display:block; width:24px; height:1.5px; background:var(--text-dark);
+  transition: transform 0.3s, opacity 0.3s;
+}
 
 /* HERO */
-#hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:93px; }
+#hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; padding-top:80px; }
 .hero-left { display:flex; flex-direction:column; justify-content:center; padding:80px 64px 80px 80px; }
 .hero-label { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--sage); margin-bottom:24px; font-weight:400; }
-.hero-title { font-family:'Cormorant Garamond',serif; font-size:clamp(52px,6vw,80px); font-weight:300; line-height:1.05; color:var(--text-dark); margin-bottom:8px; }
+.hero-title {
+  font-family:'Cormorant Garamond',serif; font-size:clamp(48px,5.5vw,76px);
+  font-weight:300; line-height:1.05; color:var(--text-dark); margin-bottom:8px;
+}
 .hero-title em { font-style:italic; color:var(--gold); }
-.hero-location { display:flex; align-items:center; gap:6px; font-size:12px; letter-spacing:1.5px; color:var(--text-light); margin-bottom:48px; text-transform:uppercase; }
-.hero-cta { display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--warm-white); background:var(--sage); padding:16px 36px; text-decoration:none; transition:background .25s; align-self:flex-start; }
-.hero-cta:hover { background:var(--sage-light); }
+.hero-location {
+  display:flex; align-items:center; gap:6px; font-size:12px;
+  letter-spacing:1.5px; color:var(--text-light); margin-bottom:48px; text-transform:uppercase;
+}
+.hero-location::before { content:'📍'; font-size:11px; }
+.hero-cta {
+  display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--warm-white); background:var(--sage); padding:16px 40px;
+  text-decoration:none; transition: background .25s, transform .2s, box-shadow .25s;
+  align-self:flex-start; border-radius:2px;
+}
+.hero-cta:hover { background:var(--sage-light); transform:translateY(-2px); box-shadow: var(--shadow-md); }
 .hero-right { position:relative; overflow:hidden; }
 .hero-right img { width:100%; height:100%; object-fit:cover; }
-.hero-placeholder { width:100%; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; color:var(--text-light); background:linear-gradient(135deg,var(--cream) 0%,#ede8df 100%); }
+.hero-placeholder {
+  width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:12px; color:var(--text-light);
+  background:linear-gradient(135deg,var(--cream) 0%,#ede8df 100%);
+}
 .hero-placeholder span:first-child { font-size:48px; }
 .hero-placeholder span:last-child { font-size:11px; letter-spacing:2px; text-transform:uppercase; }
 
 /* SECTIONS */
 section { padding:100px 80px; }
 .section-label { font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--sage); margin-bottom:16px; font-weight:400; }
-.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,4vw,52px); font-weight:300; line-height:1.1; color:var(--text-dark); }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,4vw,52px); font-weight:300; line-height:1.15; color:var(--text-dark); }
 .section-title em { font-style:italic; color:var(--gold); }
 
 /* ÜBER MICH */
-#ueber { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+#ueber { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; background:var(--warm-white); }
 .ueber-imgs { display:grid; grid-template-rows:2fr 1fr; gap:12px; height:600px; }
-.img-box { border-radius:4px; overflow:hidden; background:var(--cream); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:var(--text-light); }
-.img-box img { width:100%; height:100%; object-fit:cover; }
+.img-box {
+  border-radius:var(--radius-sm); overflow:hidden; background:var(--cream);
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px; color:var(--text-light);
+}
+.img-box img { width:100%; height:100%; object-fit:cover; transition: transform 0.6s ease; }
+.img-box:hover img { transform:scale(1.03); }
 .img-box span { font-size:11px; letter-spacing:2px; text-transform:uppercase; }
 .ueber-name { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; font-style:italic; color:var(--gold); margin-bottom:28px; }
 .ueber-quote { border-left:2px solid var(--gold-light); padding-left:24px; margin-bottom:36px; }
 .ueber-quote p { font-family:'Cormorant Garamond',serif; font-size:22px; font-style:italic; font-weight:300; line-height:1.5; color:var(--gold); }
-.ueber-text { font-size:15px; line-height:1.8; color:var(--text-mid); margin-bottom:20px; }
-.btn-outline { display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--text-dark); text-decoration:none; border-bottom:1px solid var(--text-dark); padding-bottom:3px; transition:color .2s, border-color .2s; margin-top:20px; }
-.btn-outline:hover { color:var(--sage); border-color:var(--sage); }
+.ueber-text { font-size:15px; line-height:1.85; color:var(--text-mid); margin-bottom:20px; }
+.btn-outline {
+  display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--text-dark); text-decoration:none; border:1px solid var(--text-dark);
+  padding:12px 28px; border-radius:24px; transition: all .25s; margin-top:20px;
+}
+.btn-outline:hover { color:var(--sage); border-color:var(--sage); background:var(--sage-pale); }
 
 /* ANGEBOTE */
 #angebote { background:var(--cream); }
 .angebote-header { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; }
-.alle-tickets { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-mid); text-decoration:none; transition:color .2s; }
+.alle-tickets {
+  font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-mid);
+  text-decoration:none; transition:color .2s;
+}
 .alle-tickets:hover { color:var(--sage); }
 .kurs-cards { display:flex; flex-direction:column; gap:20px; }
-.kurs-card { background:var(--warm-white); border-radius:12px; padding:32px 36px; }
+.kurs-card {
+  background:var(--warm-white); border-radius:var(--radius); padding:36px 40px;
+  border:1px solid rgba(232,226,217,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.kurs-card:hover { transform:translateY(-3px); box-shadow: var(--shadow-md); }
 .kurs-emoji { font-size:36px; margin-bottom:28px; display:block; text-align:center; }
 .kurs-level { font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--sage); margin-bottom:8px; font-weight:400; }
 .kurs-name { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:400; color:var(--text-dark); margin-bottom:12px; }
@@ -93,21 +175,54 @@ section { padding:100px 80px; }
 .kurs-divider { height:1px; background:var(--border); margin-bottom:20px; }
 .kurs-footer { display:flex; justify-content:space-between; align-items:center; }
 .kurs-preis { font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:300; color:var(--text-dark); }
-.btn-buchen { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--text-mid); text-decoration:none; transition:color .2s; cursor:pointer; background:none; border:none; font-family:'Jost',sans-serif; font-weight:300; }
-.btn-buchen:hover { color:var(--sage); }
+.btn-buchen {
+  font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--sage);
+  text-decoration:none; cursor:pointer; background:none; border:1px solid var(--sage);
+  font-family:'Jost',sans-serif; font-weight:400;
+  padding:8px 20px; border-radius:24px; transition: all .25s;
+}
+.btn-buchen:hover { background:var(--sage); color:var(--warm-white); }
+
+/* TRANSITION: Angebote → Events */
+.section-transition {
+  height:120px;
+  background: linear-gradient(180deg, var(--cream) 0%, var(--warm-white) 100%);
+}
+.section-transition-reverse {
+  height:120px;
+  background: linear-gradient(180deg, var(--warm-white) 0%, var(--cream) 100%);
+}
 
 /* EVENTS */
-#events { background:var(--warm-white); }
-.events-grid { display:flex; flex-direction:column; gap:32px; margin-top:48px; }
-.event-card { border:1px solid var(--border); border-radius:16px; padding:48px 56px; max-width:780px; margin:0 auto; width:100%; }
-.event-badge { display:inline-block; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--text-mid); border:1px solid var(--border); padding:6px 16px; border-radius:20px; margin-bottom:28px; }
-.event-title { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:300; line-height:1.1; margin-bottom:4px; color:var(--text-dark); }
+#events { background:var(--warm-white); padding-top:40px; }
+.events-grid { display:flex; flex-direction:column; gap:48px; margin-top:48px; }
+.event-card {
+  border:1px solid var(--border); border-radius:var(--radius);
+  overflow:hidden; max-width:860px; margin:0 auto; width:100%;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.event-card:hover { transform:translateY(-4px); box-shadow: var(--shadow-lg); }
+.event-card-inner { padding:48px 56px; }
+.event-badge {
+  display:inline-block; font-size:10px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--sage); border:1px solid var(--sage-pale); padding:6px 18px;
+  border-radius:24px; margin-bottom:28px;
+}
+.event-title {
+  font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:300;
+  line-height:1.1; margin-bottom:4px; color:var(--text-dark);
+}
 .event-title em { display:block; font-style:italic; color:var(--gold); }
 .event-date { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--gold); margin:16px 0 28px; }
 .event-date .date-icon { background:#e05c5c; color:white; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:500; }
-.event-imgs { display:flex; gap:12px; margin-bottom:28px; }
-.event-img-box { flex:1; height:180px; border-radius:8px; overflow:hidden; background:var(--cream); display:flex; align-items:center; justify-content:center; color:var(--text-light); font-size:11px; letter-spacing:1px; text-transform:uppercase; }
-.event-img-box img { width:100%; height:100%; object-fit:cover; }
+.event-imgs { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:28px; }
+.event-img-box {
+  height:200px; border-radius:var(--radius-sm); overflow:hidden; background:var(--cream);
+  display:flex; align-items:center; justify-content:center; color:var(--text-light);
+  font-size:11px; letter-spacing:1px; text-transform:uppercase;
+}
+.event-img-box img { width:100%; height:100%; object-fit:cover; transition: transform 0.5s; }
+.event-img-box:hover img { transform:scale(1.05); }
 .event-features { list-style:none; display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
 .event-features li { display:flex; align-items:center; gap:12px; font-size:14px; color:var(--text-mid); }
 .event-features li::before { content:'♡'; color:var(--gold-light); font-size:14px; }
@@ -115,46 +230,97 @@ section { padding:100px 80px; }
 .event-location::before { content:'📍'; font-size:11px; }
 .event-price { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--text-dark); margin-bottom:24px; }
 .event-actions { display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
-.btn-paypal { display:inline-flex; align-items:center; gap:8px; background:#0070ba; color:white; padding:12px 24px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:500; letter-spacing:1px; transition:background .2s; }
-.btn-paypal:hover { background:#005ea6; }
-.btn-stripe { display:inline-flex; align-items:center; gap:8px; background:#635bff; color:white; padding:12px 24px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:500; letter-spacing:1px; transition:background .2s; }
-.btn-stripe:hover { background:#4f46e5; }
+.btn-event-cta {
+  display:inline-block; font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--text-dark); text-decoration:none; border:1px solid var(--text-dark);
+  padding:14px 32px; border-radius:24px; transition: all .25s;
+}
+.btn-event-cta:hover { background:var(--text-dark); color:var(--warm-white); }
+.btn-paypal {
+  display:inline-flex; align-items:center; gap:8px; background:#0070ba; color:white;
+  padding:12px 24px; border-radius:24px; text-decoration:none; font-size:12px;
+  font-weight:500; letter-spacing:1px; transition:background .2s, transform .2s;
+}
+.btn-paypal:hover { background:#005ea6; transform:translateY(-1px); }
+.btn-stripe {
+  display:inline-flex; align-items:center; gap:8px; background:#635bff; color:white;
+  padding:12px 24px; border-radius:24px; text-decoration:none; font-size:12px;
+  font-weight:500; letter-spacing:1px; transition:background .2s, transform .2s;
+}
+.btn-stripe:hover { background:#4f46e5; transform:translateY(-1px); }
 .no-events { text-align:center; padding:60px; color:var(--text-light); font-size:15px; }
 
 /* PREISE */
-#preise { background:var(--cream); }
+#preise { background:var(--cream); padding-top:40px; }
 .preise-header { text-align:center; margin-bottom:16px; }
 .preise-subtitle { text-align:center; font-size:14px; color:var(--text-light); margin-bottom:64px; }
-.preise-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:860px; margin:0 auto; }
-.preis-card { background:var(--warm-white); border-radius:16px; padding:40px 36px; text-align:center; border:1px solid var(--border); transition:transform .2s, box-shadow .2s; }
-.preis-card:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(0,0,0,0.06); }
-.preis-card.featured { border-color:var(--gold-light); position:relative; }
-.preis-card.featured::before { content:'BELIEBTESTE WAHL'; position:absolute; top:-1px; left:50%; transform:translateX(-50%); font-size:9px; letter-spacing:3px; color:var(--gold); background:var(--warm-white); padding:4px 16px; white-space:nowrap; }
+.preise-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:28px; max-width:860px; margin:0 auto; }
+.preis-card {
+  background:var(--warm-white); border-radius:var(--radius); padding:40px 32px;
+  text-align:center; border:1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.preis-card:hover { transform:translateY(-4px); box-shadow: var(--shadow-lg); }
+.preis-card.featured { border-color:var(--sage); position:relative; }
+.preis-card.featured::before {
+  content:'BELIEBTESTE WAHL'; position:absolute; top:-1px; left:50%; transform:translateX(-50%);
+  font-size:9px; letter-spacing:3px; color:var(--sage); background:var(--warm-white);
+  padding:4px 16px; white-space:nowrap;
+}
 .preis-emoji { font-size:36px; margin-bottom:20px; display:block; }
 .preis-name { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:400; color:var(--text-dark); margin-bottom:6px; }
-.preis-card.featured .preis-name { color:var(--text-light); }
 .preis-desc { font-size:12px; color:var(--text-light); margin-bottom:24px; }
 .preis-amount { font-family:'Cormorant Garamond',serif; font-size:48px; font-weight:300; color:var(--text-dark); line-height:1; margin-bottom:6px; }
 .preis-card.featured .preis-amount { color:var(--gold); }
 .preis-unit { font-size:11px; color:var(--text-light); letter-spacing:1px; margin-bottom:28px; }
-.preis-divider { height:1px; background:var(--border); margin-bottom:20px; }
+.preis-divider { height:1px; background:var(--border); margin-bottom:24px; }
 .preis-actions { display:flex; flex-direction:column; gap:10px; align-items:center; }
-.btn-preis-paypal { display:inline-flex; align-items:center; gap:6px; background:#0070ba; color:white; padding:10px 22px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:500; letter-spacing:1px; transition:background .2s; width:100%; justify-content:center; }
+.btn-preis {
+  display:inline-block; font-size:11px; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--text-dark); text-decoration:none; border:1px solid var(--text-dark);
+  padding:12px 28px; border-radius:24px; transition: all .25s; width:100%; text-align:center;
+}
+.btn-preis:hover { background:var(--text-dark); color:var(--warm-white); }
+.preis-card.featured .btn-preis {
+  background:var(--sage); color:var(--warm-white); border-color:var(--sage);
+}
+.preis-card.featured .btn-preis:hover { background:var(--sage-light); }
+.btn-preis-paypal {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  background:#0070ba; color:white; padding:10px 22px; border-radius:24px;
+  text-decoration:none; font-size:11px; font-weight:500; letter-spacing:1px;
+  transition:background .2s; width:100%;
+}
 .btn-preis-paypal:hover { background:#005ea6; }
-.btn-preis-stripe { display:inline-flex; align-items:center; gap:6px; background:#635bff; color:white; padding:10px 22px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:500; letter-spacing:1px; transition:background .2s; width:100%; justify-content:center; }
+.btn-preis-stripe {
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  background:#635bff; color:white; padding:10px 22px; border-radius:24px;
+  text-decoration:none; font-size:11px; font-weight:500; letter-spacing:1px;
+  transition:background .2s; width:100%;
+}
 .btn-preis-stripe:hover { background:#4f46e5; }
 
 /* KONTAKT */
 #kontakt { background:var(--warm-white); text-align:center; }
 .kontakt-grid { display:flex; justify-content:center; gap:64px; flex-wrap:wrap; margin:48px 0 64px; }
 .kontakt-item { text-align:center; }
-.kontakt-icon { font-size:40px; margin-bottom:16px; display:block; }
+.kontakt-icon {
+  width:72px; height:72px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:28px; margin:0 auto 16px;
+  background:var(--cream); border:1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.kontakt-item:hover .kontakt-icon { transform:translateY(-3px); box-shadow: var(--shadow-md); }
 .kontakt-item h3 { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; margin-bottom:8px; }
 .kontakt-item p { font-size:13px; color:var(--text-mid); line-height:1.6; }
-.kontakt-item a { color:var(--sage); text-decoration:none; }
+.kontakt-item a { color:var(--sage); text-decoration:none; transition:color .2s; }
+.kontakt-item a:hover { color:var(--gold); }
 
 /* FOOTER */
-footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:64px; }
+footer {
+  background:var(--cream); padding:64px 80px 40px;
+  display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:64px;
+}
 .footer-brand .brand-small { font-size:9px; letter-spacing:5px; text-transform:uppercase; color:var(--text-light); margin-bottom:4px; }
 .footer-brand .brand-big { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; letter-spacing:6px; color:var(--text-mid); margin-bottom:20px; }
 .footer-brand p { font-size:13px; line-height:1.8; color:var(--text-light); max-width:280px; }
@@ -163,26 +329,59 @@ footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-tem
 .footer-col ul li { margin-bottom:10px; }
 .footer-col ul li a { font-size:13px; color:var(--text-light); text-decoration:none; transition:color .2s; }
 .footer-col ul li a:hover { color:var(--text-dark); }
-.footer-bottom { grid-column:1/-1; padding-top:32px; border-top:1px solid var(--border); font-size:11px; color:var(--text-light); letter-spacing:1px; }
+.footer-bottom {
+  grid-column:1/-1; padding-top:32px; border-top:1px solid var(--border);
+  font-size:11px; color:var(--text-light); letter-spacing:1px;
+}
 
 /* LOADING */
-.loading { display:flex; align-items:center; justify-content:center; padding:40px; color:var(--text-light); font-size:13px; letter-spacing:2px; text-transform:uppercase; }
+.loading {
+  display:flex; align-items:center; justify-content:center; padding:40px;
+  color:var(--text-light); font-size:13px; letter-spacing:2px; text-transform:uppercase;
+}
+.loading::after {
+  content:''; display:inline-block; width:16px; height:16px; margin-left:12px;
+  border:2px solid var(--border); border-top-color:var(--sage); border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
 
 /* RESPONSIVE */
 @media (max-width:900px) {
-  nav { padding:16px 24px; }
+  nav { padding:14px 20px; }
+  nav.scrolled { padding:10px 20px; }
   .nav-links { display:none; }
-  section { padding:64px 24px; }
-  #hero { grid-template-columns:1fr; min-height:auto; }
-  .hero-left { padding:60px 24px 40px; }
-  .hero-right { height:300px; }
-  #ueber { grid-template-columns:1fr; gap:40px; }
+  .nav-hamburger { display:flex; }
+  .nav-cta { display:none; }
+  section { padding:64px 20px; }
+  .section-transition, .section-transition-reverse { height:60px; }
+  #hero { grid-template-columns:1fr; min-height:auto; padding-top:72px; }
+  .hero-left { padding:48px 20px 32px; }
+  .hero-right { height:320px; }
+  #ueber { grid-template-columns:1fr; gap:40px; padding:64px 20px; }
   .ueber-imgs { height:360px; }
+  .angebote-header { flex-direction:column; align-items:flex-start; gap:12px; }
   .preise-grid { grid-template-columns:1fr; }
-  footer { grid-template-columns:1fr; gap:40px; padding:48px 24px 32px; }
-  .event-card { padding:32px 24px; }
-  .kontakt-grid { gap:40px; }
+  footer { grid-template-columns:1fr; gap:40px; padding:48px 20px 32px; }
+  .event-card-inner { padding:32px 24px; }
+  .event-imgs { grid-template-columns:1fr; }
+  .event-img-box { height:180px; }
+  .kontakt-grid { gap:32px; }
+  .event-title { font-size:32px; }
 }
+
+/* MOBILE NAV OVERLAY */
+.nav-overlay {
+  display:none; position:fixed; inset:0; z-index:105;
+  background:rgba(253,252,250,0.97); backdrop-filter:blur(20px);
+  flex-direction:column; align-items:center; justify-content:center; gap:32px;
+}
+.nav-overlay.open { display:flex; }
+.nav-overlay a {
+  font-size:14px; letter-spacing:4px; text-transform:uppercase; color:var(--text-dark);
+  text-decoration:none; font-weight:300; transition:color .2s;
+}
+.nav-overlay a:hover { color:var(--sage); }
 </style>
 </head>
 <body>
@@ -200,7 +399,19 @@ footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-tem
     <li><a href="#kontakt">Kontakt</a></li>
   </ul>
   <a href="#preise" class="nav-cta">Jetzt buchen</a>
+  <button class="nav-hamburger" onclick="toggleMobileNav()" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="nav-overlay" id="nav-overlay">
+  <a href="#ueber" onclick="closeMobileNav()">Über mich</a>
+  <a href="#angebote" onclick="closeMobileNav()">Angebote</a>
+  <a href="#events" onclick="closeMobileNav()">Events</a>
+  <a href="#preise" onclick="closeMobileNav()">Preise</a>
+  <a href="#kontakt" onclick="closeMobileNav()">Kontakt</a>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -217,11 +428,11 @@ footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-tem
 
 <!-- ÜBER MICH -->
 <section id="ueber">
-  <div class="ueber-imgs">
+  <div class="ueber-imgs fade-up">
     <div class="img-box" id="ueber-img1"><span>📸 Foto 1</span></div>
     <div class="img-box" id="ueber-img2"><span>📸 Foto 2</span></div>
   </div>
-  <div class="ueber-content">
+  <div class="ueber-content fade-up">
     <p class="section-label">Über mich</p>
     <div class="ueber-name" id="ueber-name">Gabi</div>
     <div class="ueber-quote"><p id="ueber-quote">„Yoga ist für mich nicht nur Bewegung – es ist eine Einladung, nach Hause zu kommen."</p></div>
@@ -233,54 +444,64 @@ footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-tem
 
 <!-- ANGEBOTE -->
 <section id="angebote">
-  <div class="angebote-header">
+  <div class="angebote-header fade-up">
     <div><p class="section-label">Angebote</p><h2 class="section-title">Kurse für <em>alle Level</em></h2></div>
     <a href="#preise" class="alle-tickets">Alle Tickets →</a>
   </div>
   <div class="kurs-cards" id="kurs-cards">
-    <div class="loading">Lädt...</div>
+    <div class="loading">Lädt</div>
   </div>
 </section>
+
+<!-- TRANSITION -->
+<div class="section-transition"></div>
 
 <!-- EVENTS -->
 <section id="events">
-  <p class="section-label" style="text-align:center">Nächstes Event</p>
-  <h2 class="section-title" style="text-align:center">Besondere <em>Yoga-Erlebnisse</em></h2>
+  <div class="fade-up" style="text-align:center">
+    <p class="section-label">Nächstes Event</p>
+    <h2 class="section-title">Besondere <em>Yoga-Erlebnisse</em></h2>
+  </div>
   <div class="events-grid" id="events-grid">
-    <div class="loading">Lädt...</div>
+    <div class="loading">Lädt</div>
   </div>
 </section>
 
+<!-- TRANSITION -->
+<div class="section-transition-reverse"></div>
+
 <!-- PREISE -->
 <section id="preise">
-  <div class="preise-header">
+  <div class="preise-header fade-up">
     <p class="section-label">Preise</p>
     <h2 class="section-title">Dein passendes <em>Ticket</em></h2>
   </div>
   <p class="preise-subtitle" id="preise-subtitle">Keine Mitgliedschaft, keine Bindung. Einfach buchen und loslegen.</p>
   <div class="preise-grid" id="preise-grid">
-    <div class="loading" style="grid-column:1/-1">Lädt...</div>
+    <div class="loading" style="grid-column:1/-1">Lädt</div>
   </div>
 </section>
 
 <!-- KONTAKT -->
 <section id="kontakt">
-  <p class="section-label">Kontakt</p>
-  <h2 class="section-title">Bereit für dein<br><em>erstes Mal?</em></h2>
-  <p style="font-size:15px;color:var(--text-mid);margin-top:16px;" id="kontakt-text">Melde dich einfach – ich freue mich von dir zu hören!</p>
-  <div class="kontakt-grid">
+  <div class="fade-up">
+    <p class="section-label">Kontakt</p>
+    <h2 class="section-title">Bereit für dein<br><em>erstes Mal?</em></h2>
+    <p style="font-size:15px;color:var(--text-mid);margin-top:16px;" id="kontakt-text">Melde dich einfach – ich freue mich von dir zu hören!</p>
+  </div>
+  <div class="kontakt-grid fade-up">
     <div class="kontakt-item">
-      <span class="kontakt-icon">✉️</span>
+      <div class="kontakt-icon">✉️</div>
       <h3>E-Mail</h3>
       <p><a href="#" id="kontakt-email-link">E-Mail</a></p>
     </div>
     <div class="kontakt-item">
-      <span class="kontakt-icon">💬</span>
+      <div class="kontakt-icon">💬</div>
       <h3>WhatsApp</h3>
       <p><a href="#" id="kontakt-whatsapp-link">Schreib mir direkt</a></p>
     </div>
     <div class="kontakt-item">
-      <span class="kontakt-icon">📷</span>
+      <div class="kontakt-icon">📷</div>
       <h3>Instagram</h3>
       <p><a href="#" id="kontakt-instagram-link" target="_blank">Folge mir</a></p>
     </div>
@@ -315,12 +536,37 @@ footer { background:var(--cream); padding:64px 80px 40px; display:grid; grid-tem
   <div class="footer-bottom">© 2025 Gabi Sieckendieck Yoga · Wermelskirchen</div>
 </footer>
 
+<!-- MOBILE NAV JS -->
+<script>
+function toggleMobileNav() {
+  document.getElementById('nav-overlay').classList.toggle('open');
+}
+function closeMobileNav() {
+  document.getElementById('nav-overlay').classList.remove('open');
+}
+
+// Shrink nav on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Scroll fade-in animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
 <!-- Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, getDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-// ── HIER DEINE FIREBASE-DATEN EINTRAGEN ──
 const firebaseConfig = {
   apiKey: "AIzaSyBAk6z2EA5wo1AXvfhGEgPvBCQoetMtMEc",
   authDomain: "gabi-yoga.firebaseapp.com",
@@ -333,21 +579,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Hilfsfunktion: setzt Text wenn vorhanden
+// ── HILFSFUNKTIONEN ──
 function setText(id, value) {
   const el = document.getElementById(id);
   if (el && value) el.textContent = value;
 }
 
-function setHTML(id, value) {
-  const el = document.getElementById(id);
-  if (el && value) el.innerHTML = value;
-}
-
 function setImg(id, url) {
   const el = document.getElementById(id);
   if (!el || !url) return;
-  el.innerHTML = `<img src="${url}" alt="">`;
+  el.innerHTML = `<img src="${url}" alt="" loading="lazy">`;
 }
 
 // ── INHALTE LADEN ──
@@ -359,7 +600,8 @@ async function loadContent() {
 
     // Hero
     if (d.heroImg) {
-      document.getElementById("hero-img-wrap").innerHTML = `<img src="${d.heroImg}" alt="Gabi Yoga" style="width:100%;height:100%;object-fit:cover">`;
+      document.getElementById("hero-img-wrap").innerHTML =
+        `<img src="${d.heroImg}" alt="Gabi Yoga" style="width:100%;height:100%;object-fit:cover" loading="eager">`;
     }
     setText("hero-label", d.heroLabel);
     setText("hero-location", d.heroLocation);
@@ -379,13 +621,16 @@ async function loadContent() {
     const waEl = document.getElementById("kontakt-whatsapp-link");
     if (waEl && d.whatsapp) waEl.href = `https://wa.me/${d.whatsapp.replace(/\D/g,"")}`;
     const igEl = document.getElementById("kontakt-instagram-link");
-    if (igEl && d.instagram) { igEl.href = d.instagram; igEl.textContent = "@" + d.instagram.split("/").filter(Boolean).pop(); }
+    if (igEl && d.instagram) {
+      igEl.href = d.instagram;
+      igEl.textContent = "@" + d.instagram.split("/").filter(Boolean).pop();
+    }
 
     // Footer
     setText("footer-text", d.footerText);
     setText("preise-subtitle", d.preiseSubtitle);
 
-  } catch(e) { console.log("Content load error:", e); }
+  } catch(e) { console.error("Content load error:", e); }
 }
 
 // ── KURSE LADEN ──
@@ -393,24 +638,33 @@ async function loadKurse() {
   const container = document.getElementById("kurs-cards");
   try {
     const snap = await getDocs(collection(db, "kurse"));
-    if (snap.empty) { container.innerHTML = '<p class="no-events">Keine Kurse vorhanden.</p>'; return; }
+    if (snap.empty) {
+      container.innerHTML = '<p class="no-events">Keine Kurse vorhanden.</p>';
+      return;
+    }
     container.innerHTML = "";
     snap.forEach(d => {
       const k = d.data();
-      container.innerHTML += `
-        <div class="kurs-card">
-          <span class="kurs-emoji">${k.emoji||"🧘"}</span>
-          <p class="kurs-level">${k.level||""}</p>
-          <h3 class="kurs-name">${k.name||""}</h3>
-          <p class="kurs-desc">${k.beschreibung||""}</p>
-          <div class="kurs-divider"></div>
-          <div class="kurs-footer">
-            <span class="kurs-preis">ab ${k.preis||"—"} €</span>
-            <a href="#preise" class="btn-buchen">Buchen</a>
-          </div>
+      const card = document.createElement("div");
+      card.className = "kurs-card fade-up";
+      card.innerHTML = `
+        <span class="kurs-emoji">${k.emoji || "🧘"}</span>
+        <p class="kurs-level">${k.level || ""}</p>
+        <h3 class="kurs-name">${k.name || ""}</h3>
+        <p class="kurs-desc">${k.beschreibung || ""}</p>
+        <div class="kurs-divider"></div>
+        <div class="kurs-footer">
+          <span class="kurs-preis">ab ${k.preis || "—"} €</span>
+          <a href="#preise" class="btn-buchen">Buchen</a>
         </div>`;
+      container.appendChild(card);
+      // Trigger animation
+      requestAnimationFrame(() => observer.observe(card));
     });
-  } catch(e) { container.innerHTML = '<p class="no-events">Kurse konnten nicht geladen werden.</p>'; }
+  } catch(e) {
+    container.innerHTML = '<p class="no-events">Kurse konnten nicht geladen werden.</p>';
+    console.error("Kurse load error:", e);
+  }
 }
 
 // ── EVENTS LADEN ──
@@ -418,32 +672,49 @@ async function loadEvents() {
   const container = document.getElementById("events-grid");
   try {
     const snap = await getDocs(collection(db, "events"));
-    if (snap.empty) { container.innerHTML = '<p class="no-events">Keine Events geplant – schau bald wieder vorbei! 🌿</p>'; return; }
+    if (snap.empty) {
+      container.innerHTML = '<p class="no-events">Keine Events geplant – schau bald wieder vorbei! 🌿</p>';
+      return;
+    }
     container.innerHTML = "";
     snap.forEach(d => {
       const e = d.data();
       const imgs = e.bilder && e.bilder.length > 0
-        ? e.bilder.map(url => `<div class="event-img-box"><img src="${url}" alt=""></div>`).join("")
+        ? e.bilder.map(url => `<div class="event-img-box"><img src="${url}" alt="" loading="lazy"></div>`).join("")
         : "";
       const features = e.highlights && e.highlights.length > 0
         ? e.highlights.map(h => `<li>${h}</li>`).join("")
         : "";
-      const paypalBtn = e.paypalLink ? `<a href="${e.paypalLink}" target="_blank" class="btn-paypal">💳 PayPal</a>` : "";
-      const stripeBtn = e.stripeLink ? `<a href="${e.stripeLink}" target="_blank" class="btn-stripe">💜 Stripe</a>` : "";
+      const paypalBtn = e.paypalLink
+        ? `<a href="${e.paypalLink}" target="_blank" class="btn-paypal">💳 PayPal</a>` : "";
+      const stripeBtn = e.stripeLink
+        ? `<a href="${e.stripeLink}" target="_blank" class="btn-stripe">💜 Stripe</a>` : "";
+      const ctaBtn = (!e.paypalLink && !e.stripeLink)
+        ? `<a href="#kontakt" class="btn-event-cta">Jetzt anmelden →</a>` : "";
 
-      container.innerHTML += `
-        <div class="event-card">
+      const card = document.createElement("div");
+      card.className = "event-card fade-up";
+      card.innerHTML = `
+        ${imgs ? `<div class="event-imgs">${imgs}</div>` : ""}
+        <div class="event-card-inner">
           <span class="event-badge">Special Event</span>
-          <h3 class="event-title">${e.titel||""}<em>${e.untertitel||""}</em></h3>
-          <div class="event-date"><span class="date-icon">${e.datumAnzeige||"?"}</span>${e.datum||"Datum folgt"}</div>
-          ${imgs ? `<div class="event-imgs">${imgs}</div>` : ""}
+          <h3 class="event-title">${e.titel || ""}<em>${e.untertitel || ""}</em></h3>
+          <div class="event-date">
+            <span class="date-icon">📅</span>
+            ${e.datum || "Datum folgt"}
+          </div>
           ${features ? `<ul class="event-features">${features}</ul>` : ""}
           ${e.ort ? `<div class="event-location">${e.ort}</div>` : ""}
           ${e.preis ? `<div class="event-price">ab ${e.preis} €</div>` : ""}
-          <div class="event-actions">${paypalBtn}${stripeBtn}</div>
+          <div class="event-actions">${paypalBtn}${stripeBtn}${ctaBtn}</div>
         </div>`;
+      container.appendChild(card);
+      requestAnimationFrame(() => observer.observe(card));
     });
-  } catch(e) { container.innerHTML = '<p class="no-events">Events konnten nicht geladen werden.</p>'; }
+  } catch(e) {
+    container.innerHTML = '<p class="no-events">Events konnten nicht geladen werden.</p>';
+    console.error("Events load error:", e);
+  }
 }
 
 // ── PREISE LADEN ──
@@ -451,27 +722,49 @@ async function loadPreise() {
   const container = document.getElementById("preise-grid");
   try {
     const snap = await getDocs(collection(db, "preise"));
-    if (snap.empty) { container.innerHTML = '<p class="no-events" style="grid-column:1/-1">Keine Preise vorhanden.</p>'; return; }
+    if (snap.empty) {
+      container.innerHTML = '<p class="no-events" style="grid-column:1/-1">Keine Preise vorhanden.</p>';
+      return;
+    }
     container.innerHTML = "";
     const cards = [];
-    snap.forEach(d => cards.push({id: d.id, ...d.data()}));
-    cards.sort((a,b) => (a.reihenfolge||0) - (b.reihenfolge||0));
+    snap.forEach(d => cards.push({ id: d.id, ...d.data() }));
+    cards.sort((a, b) => (a.reihenfolge || 0) - (b.reihenfolge || 0));
+
     cards.forEach(p => {
-      const paypalBtn = p.paypalLink ? `<a href="${p.paypalLink}" target="_blank" class="btn-preis-paypal">💳 PayPal</a>` : "";
-      const stripeBtn = p.stripeLink ? `<a href="${p.stripeLink}" target="_blank" class="btn-preis-stripe">💜 Stripe</a>` : "";
-      container.innerHTML += `
-        <div class="preis-card ${p.featured ? 'featured' : ''}">
-          <span class="preis-emoji">${p.emoji||"🌿"}</span>
-          <div class="preis-name">${p.name||""}</div>
-          <div class="preis-desc">${p.beschreibung||""}</div>
-          <div class="preis-amount">${p.preis||"—"} €</div>
-          <div class="preis-unit">${p.einheit||""}</div>
-          <div class="preis-divider"></div>
-          <div class="preis-actions">${paypalBtn}${stripeBtn}</div>
-        </div>`;
+      const hasPayment = p.paypalLink || p.stripeLink;
+      const paypalBtn = p.paypalLink
+        ? `<a href="${p.paypalLink}" target="_blank" class="btn-preis-paypal">💳 PayPal</a>` : "";
+      const stripeBtn = p.stripeLink
+        ? `<a href="${p.stripeLink}" target="_blank" class="btn-preis-stripe">💜 Stripe</a>` : "";
+      const genericBtn = !hasPayment
+        ? `<a href="#kontakt" class="btn-preis">${p.featured ? 'Jetzt sichern' : 'Buchen'}</a>` : "";
+
+      const card = document.createElement("div");
+      card.className = `preis-card fade-up ${p.featured ? 'featured' : ''}`;
+      card.innerHTML = `
+        <span class="preis-emoji">${p.emoji || "🌿"}</span>
+        <div class="preis-name">${p.name || ""}</div>
+        <div class="preis-desc">${p.beschreibung || ""}</div>
+        <div class="preis-amount">${p.preis || "—"} €</div>
+        <div class="preis-unit">${p.einheit || ""}</div>
+        <div class="preis-divider"></div>
+        <div class="preis-actions">${paypalBtn}${stripeBtn}${genericBtn}</div>`;
+      container.appendChild(card);
+      requestAnimationFrame(() => observer.observe(card));
     });
-  } catch(e) { container.innerHTML = '<p class="no-events" style="grid-column:1/-1">Preise konnten nicht geladen werden.</p>'; }
+  } catch(e) {
+    container.innerHTML = '<p class="no-events" style="grid-column:1/-1">Preise konnten nicht geladen werden.</p>';
+    console.error("Preise load error:", e);
+  }
 }
+
+// Observer für dynamisch geladene Elemente
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
 
 // ── ALLES STARTEN ──
 loadContent();
