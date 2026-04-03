@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+.a    </div>
+
+      <<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -218,7 +220,10 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
   <div class="admin-body">
     <div class="sidebar">
       <div class="sidebar-item active" onclick="showTab('tab-allgemein',this)"><span>✏️</span>Allgemein</div>
+      <div class="sidebar-item" onclick="showTab('tab-sektionen',this)"><span>📄</span>Sektionen</div>
       <div class="sidebar-item" onclick="showTab('tab-ueber',this)"><span>👤</span>Über mich</div>
+      <div class="sidebar-item" onclick="showTab('tab-testimonials',this)"><span>⭐</span>Testimonials</div>
+      <div class="sidebar-item" onclick="showTab('tab-faqadmin',this)"><span>❓</span>FAQ & Einwände</div>
       <div class="sidebar-item" onclick="showTab('tab-kurse',this)"><span>🧘</span>Kurse</div>
       <div class="sidebar-item" onclick="showTab('tab-events',this)"><span>📅</span>Events</div>
       <div class="sidebar-item" onclick="showTab('tab-preise',this)"><span>💶</span>Preise</div>
@@ -245,20 +250,39 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Hauptbild / Video & Headline</div>
+          <div class="card-title">Hero – Texte</div>
           <div class="field">
-            <label>Label (klein, über Titel)</label>
-            <input type="text" id="heroLabel" placeholder="z.B. Yoga mit Herz & Seele">
+            <label>Headline (Hauptüberschrift)</label>
+            <input type="text" id="heroHeadline" placeholder="Du funktionierst nur noch…">
           </div>
           <div class="field">
-            <label>Standort</label>
-            <input type="text" id="heroLocation" placeholder="z.B. Wermelskirchen und Umgebung">
+            <label>Headline kursiv (nach dem …)</label>
+            <input type="text" id="heroHeadlineEm" placeholder="statt wirklich zu leben?">
           </div>
           <div class="field">
-            <label>Hauptbild</label>
+            <label>Untertitel</label>
+            <textarea id="heroSub" placeholder="Finde in nur 60 Minuten zurück zu Ruhe..."></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>CTA-Button Text</label>
+              <input type="text" id="heroCta" placeholder="Jetzt Platz sichern">
+            </div>
+            <div class="field">
+              <label>Standort / Label</label>
+              <input type="text" id="heroLocation" placeholder="Wermelskirchen und Umgebung">
+            </div>
+          </div>
+          <div class="field">
+            <label>Vertrauenszeile (unter Button)</label>
+            <input type="text" id="heroTrust" placeholder="Anfängerfreundlich · Kein Leistungsdruck · Vor Ort in Wermelskirchen">
+          </div>
+          <div class="sep"></div>
+          <div class="card-title">Hero – Hintergrundbild / Video</div>
+          <div class="field">
             <div class="img-upload-area" onclick="document.getElementById('heroImgFile').click()">
-              <input type="file" id="heroImgFile" accept="image/*,video/*" onchange="previewImg(this,'heroImgPreview','heroImgUrl')">
-              <div class="img-upload-label"><span>🖼️</span>Klicken zum Hochladen</div>
+              <input type="file" id="heroImgFile" accept="image/*,video/*" onchange="previewMedia(this,'heroImgPreview','heroImgUrl')">
+              <div class="img-upload-label"><span>🖼️</span>Bild oder Video hochladen</div>
               <img id="heroImgPreview" class="img-preview">
             </div>
           </div>
@@ -267,7 +291,7 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
           </div>
         </div>
         <div class="card">
-          <div class="card-title">Footer Text</div>
+          <div class="card-title">Footer & Preise</div>
           <div class="field">
             <label>Kurzbeschreibung im Footer</label>
             <textarea id="footerText" placeholder="Yoga mit Herz & Seele..."></textarea>
@@ -304,6 +328,11 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
             <textarea id="ueberText2"></textarea>
           </div>
           <div class="sep"></div>
+          <div class="card-title">Checkliste (3 Punkte)</div>
+          <div class="field"><label>Punkt 1</label><input type="text" id="ueberCheck1" placeholder="Deinen Körper lösen"></div>
+          <div class="field"><label>Punkt 2</label><input type="text" id="ueberCheck2" placeholder="Dein Nervensystem beruhigen"></div>
+          <div class="field"><label>Punkt 3</label><input type="text" id="ueberCheck3" placeholder="Deinen Kopf endlich leise machen"></div>
+          <div class="sep"></div>
           <div class="card-title">Fotos</div>
           <div class="field-row">
             <div class="field">
@@ -326,6 +355,157 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
           <div class="btn-row">
             <button class="btn-save" onclick="saveContent()">Speichern</button>
           </div>
+        </div>
+      </div>
+
+      <!-- SEKTIONEN -->
+      <div class="tab-panel" id="tab-sektionen">
+        <h2 class="panel-title">Sektionen & <em>Texte</em></h2>
+
+        <div class="card">
+          <div class="card-title">Problem-Sektion</div>
+          <div class="field"><label>Überschrift</label><input type="text" id="problemTitle" placeholder="Dein Alltag hört nie auf."></div>
+          <div class="field"><label>Überschrift kursiv</label><input type="text" id="problemTitleEm" placeholder="nie"></div>
+          <div class="field"><label>Text 1</label><textarea id="problemText1" placeholder="Termine. Verantwortung. Druck..."></textarea></div>
+          <div class="field"><label>Text 2</label><input type="text" id="problemText2" placeholder="Dein Körper? Verspannt. Müde. Schwer."></div>
+          <div class="field"><label>Highlight-Text</label><input type="text" id="problemHighlight" placeholder="Und egal was du versuchst… du kommst einfach nicht runter."></div>
+          <div class="field">
+            <label>Bild</label>
+            <div class="img-upload-area" onclick="document.getElementById('problemImgFile').click()">
+              <input type="file" id="problemImgFile" accept="image/*,video/*" onchange="previewMedia(this,'problemImgPreview','problemImg')">
+              <div class="img-upload-label"><span>📸</span>Hochladen</div>
+              <img id="problemImgPreview" class="img-preview">
+            </div>
+          </div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Belief Break</div>
+          <div class="field"><label>Text oben</label><textarea id="beliefText" placeholder="Die meisten glauben, sie brauchen mehr Disziplin..."></textarea></div>
+          <div class="field"><label>Fazit</label><textarea id="beliefConclusion" placeholder="Dein Körper ist im Dauer-Stressmodus gefangen..."></textarea></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Angebot-Box (unter Kursen)</div>
+          <div class="field"><label>Titel</label><input type="text" id="angebotTitle" placeholder="🧘‍♀️ Yoga vor Ort"></div>
+          <div class="field"><label>Feature 1</label><input type="text" id="angebotF1" placeholder="60 Minuten geführte Praxis"></div>
+          <div class="field"><label>Feature 2</label><input type="text" id="angebotF2" placeholder="Ideal für Frauen 30–50"></div>
+          <div class="field"><label>Feature 3</label><input type="text" id="angebotF3" placeholder="Fokus: Entspannung & Körpergefühl"></div>
+          <div class="field"><label>Feature 4</label><input type="text" id="angebotF4" placeholder="Kleine Gruppen, persönliche Betreuung"></div>
+          <div class="field"><label>Ergebnis-Text</label><input type="text" id="angebotResult" placeholder="Du gehst raus und fühlst dich: ruhiger · leichter · klarer"></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Atmosphäre</div>
+          <div class="field"><label>Überschrift</label><textarea id="atmoTitle" placeholder="Kein Druck. Kein Vergleichen. Nur ein Raum..."></textarea></div>
+          <div class="field-row">
+            <div class="field">
+              <label>Galerie Bild 1</label>
+              <div class="img-upload-area" onclick="document.getElementById('atmoImg1File').click()">
+                <input type="file" id="atmoImg1File" accept="image/*,video/*" onchange="previewMedia(this,'atmoImg1Preview','atmoImg1')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="atmoImg1Preview" class="img-preview">
+              </div>
+            </div>
+            <div class="field">
+              <label>Galerie Bild 2</label>
+              <div class="img-upload-area" onclick="document.getElementById('atmoImg2File').click()">
+                <input type="file" id="atmoImg2File" accept="image/*,video/*" onchange="previewMedia(this,'atmoImg2Preview','atmoImg2')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="atmoImg2Preview" class="img-preview">
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Galerie Bild 3</label>
+              <div class="img-upload-area" onclick="document.getElementById('atmoImg3File').click()">
+                <input type="file" id="atmoImg3File" accept="image/*,video/*" onchange="previewMedia(this,'atmoImg3Preview','atmoImg3')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="atmoImg3Preview" class="img-preview">
+              </div>
+            </div>
+            <div class="field">
+              <label>Galerie Bild 4</label>
+              <div class="img-upload-area" onclick="document.getElementById('atmoImg4File').click()">
+                <input type="file" id="atmoImg4File" accept="image/*,video/*" onchange="previewMedia(this,'atmoImg4Preview','atmoImg4')">
+                <div class="img-upload-label"><span>📸</span>Hochladen</div>
+                <img id="atmoImg4Preview" class="img-preview">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Risiko-Umkehr (Versprechen)</div>
+          <div class="field"><label>Überschrift</label><input type="text" id="risikoTitle" placeholder="Teste es ohne Risiko."></div>
+          <div class="field"><label>Text</label><textarea id="risikoText" placeholder="Wenn du dich nach der ersten Stunde nicht besser fühlst..."></textarea></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Final CTA</div>
+          <div class="field"><label>Hinweis (klein, oben)</label><input type="text" id="ctaNotice" placeholder="Die Plätze sind bewusst begrenzt"></div>
+          <div class="field"><label>Überschrift</label><textarea id="ctaTitle" placeholder="Sichere dir jetzt deinen Platz und spüre schon nach der ersten Stunde den Unterschied."></textarea></div>
+          <div class="field"><label>Button-Text</label><input type="text" id="ctaButton" placeholder="Jetzt buchen"></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="tab-panel" id="tab-testimonials">
+        <h2 class="panel-title">Testimonials & <em>Bewertungen</em></h2>
+        <div class="card">
+          <div class="card-title">Testimonial 1</div>
+          <div class="field"><label>Zitat</label><textarea id="testi1Quote" placeholder="„Ich konnte zum ersten Mal seit Monaten wirklich abschalten.""></textarea></div>
+          <div class="field"><label>Name</label><input type="text" id="testi1Name" placeholder="— Lisa M."></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Testimonial 2</div>
+          <div class="field"><label>Zitat</label><textarea id="testi2Quote" placeholder="„Mein Rücken fühlt sich endlich wieder frei an.""></textarea></div>
+          <div class="field"><label>Name</label><input type="text" id="testi2Name" placeholder="— Sandra K."></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Testimonial 3</div>
+          <div class="field"><label>Zitat</label><textarea id="testi3Quote" placeholder="„Ich gehe jedes Mal leichter nach Hause.""></textarea></div>
+          <div class="field"><label>Name</label><input type="text" id="testi3Name" placeholder="— Julia R."></div>
+        </div>
+        <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+      </div>
+
+      <!-- FAQ & EINWÄNDE -->
+      <div class="tab-panel" id="tab-faqadmin">
+        <h2 class="panel-title">FAQ & <em>Einwände</em></h2>
+        <div class="card">
+          <div class="card-title">Einwände (Bedenken-Bereich)</div>
+          <div class="field"><label>Einwand 1 – Frage</label><input type="text" id="einwand1Q" placeholder="„Ich bin nicht flexibel genug""></div>
+          <div class="field"><label>Einwand 1 – Antwort</label><textarea id="einwand1A" placeholder="Perfekt. Genau dafür ist es da..."></textarea></div>
+          <div class="sep"></div>
+          <div class="field"><label>Einwand 2 – Frage</label><input type="text" id="einwand2Q" placeholder="„Ich habe noch nie Yoga gemacht""></div>
+          <div class="field"><label>Einwand 2 – Antwort</label><textarea id="einwand2A" placeholder="Umso besser! Du wirst Schritt für Schritt geführt..."></textarea></div>
+          <div class="sep"></div>
+          <div class="field"><label>Einwand 3 – Frage</label><input type="text" id="einwand3Q" placeholder="„Ich habe keine Zeit""></div>
+          <div class="field"><label>Einwand 3 – Antwort</label><textarea id="einwand3A" placeholder="Genau deshalb brauchst du es..."></textarea></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Häufige Fragen (FAQ)</div>
+          <div class="field"><label>Frage 1</label><input type="text" id="faq1Q" placeholder="Muss ich Erfahrung haben?"></div>
+          <div class="field"><label>Antwort 1</label><textarea id="faq1A" placeholder="Nein! Meine Kurse sind für alle Level geeignet..."></textarea></div>
+          <div class="sep"></div>
+          <div class="field"><label>Frage 2</label><input type="text" id="faq2Q" placeholder="Was soll ich mitbringen?"></div>
+          <div class="field"><label>Antwort 2</label><textarea id="faq2A" placeholder="Bequeme Kleidung und etwas zu trinken..."></textarea></div>
+          <div class="sep"></div>
+          <div class="field"><label>Frage 3</label><input type="text" id="faq3Q" placeholder="Wie buche ich?"></div>
+          <div class="field"><label>Antwort 3</label><textarea id="faq3A" placeholder="Klicke einfach auf „Platz sichern"..."></textarea></div>
+          <div class="sep"></div>
+          <div class="field"><label>Frage 4</label><input type="text" id="faq4Q" placeholder="Wo findet der Kurs statt?"></div>
+          <div class="field"><label>Antwort 4</label><textarea id="faq4A" placeholder="In Wermelskirchen und Umgebung..."></textarea></div>
+          <div class="btn-row"><button class="btn-save" onclick="saveContent()">Speichern</button></div>
         </div>
       </div>
 
@@ -646,42 +826,113 @@ async function loadContentForm() {
     const snap = await getDoc(doc(db, "content", "main"));
     if (!snap.exists()) return;
     const d = snap.data();
-    const fields = ["heroLabel","heroLocation","ueberName","ueberQuote","ueberText1","ueberText2","footerText","preiseSubtitle","kontaktText"];
+    // All text fields
+    const fields = [
+      "heroHeadline","heroHeadlineEm","heroSub","heroCta","heroLocation","heroTrust",
+      "ueberName","ueberQuote","ueberText1","ueberText2","ueberCheck1","ueberCheck2","ueberCheck3",
+      "problemTitle","problemTitleEm","problemText1","problemText2","problemHighlight",
+      "beliefText","beliefConclusion",
+      "angebotTitle","angebotF1","angebotF2","angebotF3","angebotF4","angebotResult",
+      "atmoTitle",
+      "testi1Quote","testi1Name","testi2Quote","testi2Name","testi3Quote","testi3Name",
+      "einwand1Q","einwand1A","einwand2Q","einwand2A","einwand3Q","einwand3A",
+      "faq1Q","faq1A","faq2Q","faq2A","faq3Q","faq3A","faq4Q","faq4A",
+      "risikoTitle","risikoText",
+      "ctaNotice","ctaTitle","ctaButton",
+      "footerText","preiseSubtitle","kontaktText"
+    ];
     fields.forEach(f => { const el = document.getElementById(f); if(el && d[f]) el.value = d[f]; });
     if(d.email) document.getElementById("kontaktEmail").value = d.email;
     if(d.whatsapp) document.getElementById("kontaktWhatsapp").value = d.whatsapp;
     if(d.instagram) document.getElementById("kontaktInstagram").value = d.instagram;
-    // show existing media (logo, hero, ueber images)
-    if(d.heroImg) { window._uploadedUrls["heroImgUrl"] = d.heroImg; showExistingPreview("heroImgPreview", d.heroImg); }
-    if(d.logoUrl) { window._uploadedUrls["logoUrl"] = d.logoUrl; showExistingPreview("logoPreview", d.logoUrl); }
-    if(d.ueberImg1) { window._uploadedUrls["ueberImg1"] = d.ueberImg1; showExistingPreview("ueberImg1Preview", d.ueberImg1); }
-    if(d.ueberImg2) { window._uploadedUrls["ueberImg2"] = d.ueberImg2; showExistingPreview("ueberImg2Preview", d.ueberImg2); }
-  } catch(e) {}
+    // Show existing media previews
+    const mediaFields = {
+      heroImg:"heroImgPreview", logoUrl:"logoPreview",
+      ueberImg1:"ueberImg1Preview", ueberImg2:"ueberImg2Preview",
+      problemImg:"problemImgPreview",
+      atmoImg1:"atmoImg1Preview", atmoImg2:"atmoImg2Preview",
+      atmoImg3:"atmoImg3Preview", atmoImg4:"atmoImg4Preview"
+    };
+    // Map Firestore field -> upload key (some differ)
+    const uploadKeyMap = {heroImg:"heroImgUrl"};
+    Object.entries(mediaFields).forEach(([key, previewId]) => {
+      if(d[key]) {
+        const uploadKey = uploadKeyMap[key] || key;
+        window._uploadedUrls[uploadKey] = d[key];
+        showExistingPreview(previewId, d[key]);
+      }
+    });
+  } catch(e) { console.error(e); }
 }
 
 window.saveContent = async function() {
   try {
+    // Upload all media files
     const logoUrl = await uploadFile("logoUrl") || window._uploadedUrls["logoUrl"] || null;
     const heroImgUrl = await uploadFile("heroImgUrl") || window._uploadedUrls["heroImgUrl"] || null;
     const ueberImg1 = await uploadFile("ueberImg1") || window._uploadedUrls["ueberImg1"] || null;
     const ueberImg2 = await uploadFile("ueberImg2") || window._uploadedUrls["ueberImg2"] || null;
+    const problemImg = await uploadFile("problemImg") || window._uploadedUrls["problemImg"] || null;
+    const atmoImg1 = await uploadFile("atmoImg1") || window._uploadedUrls["atmoImg1"] || null;
+    const atmoImg2 = await uploadFile("atmoImg2") || window._uploadedUrls["atmoImg2"] || null;
+    const atmoImg3 = await uploadFile("atmoImg3") || window._uploadedUrls["atmoImg3"] || null;
+    const atmoImg4 = await uploadFile("atmoImg4") || window._uploadedUrls["atmoImg4"] || null;
 
     const data = {
-      heroLabel: v("heroLabel"), heroLocation: v("heroLocation"),
+      // Hero
+      heroHeadline: v("heroHeadline"), heroHeadlineEm: v("heroHeadlineEm"),
+      heroSub: v("heroSub"), heroCta: v("heroCta"),
+      heroLocation: v("heroLocation"), heroTrust: v("heroTrust"),
+      // Über mich
       ueberName: v("ueberName"), ueberQuote: v("ueberQuote"),
       ueberText1: v("ueberText1"), ueberText2: v("ueberText2"),
+      ueberCheck1: v("ueberCheck1"), ueberCheck2: v("ueberCheck2"), ueberCheck3: v("ueberCheck3"),
+      // Problem
+      problemTitle: v("problemTitle"), problemTitleEm: v("problemTitleEm"),
+      problemText1: v("problemText1"), problemText2: v("problemText2"), problemHighlight: v("problemHighlight"),
+      // Belief
+      beliefText: v("beliefText"), beliefConclusion: v("beliefConclusion"),
+      // Angebot Box
+      angebotTitle: v("angebotTitle"),
+      angebotF1: v("angebotF1"), angebotF2: v("angebotF2"), angebotF3: v("angebotF3"), angebotF4: v("angebotF4"),
+      angebotResult: v("angebotResult"),
+      // Atmosphäre
+      atmoTitle: v("atmoTitle"),
+      // Testimonials
+      testi1Quote: v("testi1Quote"), testi1Name: v("testi1Name"),
+      testi2Quote: v("testi2Quote"), testi2Name: v("testi2Name"),
+      testi3Quote: v("testi3Quote"), testi3Name: v("testi3Name"),
+      // Einwände
+      einwand1Q: v("einwand1Q"), einwand1A: v("einwand1A"),
+      einwand2Q: v("einwand2Q"), einwand2A: v("einwand2A"),
+      einwand3Q: v("einwand3Q"), einwand3A: v("einwand3A"),
+      // FAQ
+      faq1Q: v("faq1Q"), faq1A: v("faq1A"), faq2Q: v("faq2Q"), faq2A: v("faq2A"),
+      faq3Q: v("faq3Q"), faq3A: v("faq3A"), faq4Q: v("faq4Q"), faq4A: v("faq4A"),
+      // Risiko
+      risikoTitle: v("risikoTitle"), risikoText: v("risikoText"),
+      // Final CTA
+      ctaNotice: v("ctaNotice"), ctaTitle: v("ctaTitle"), ctaButton: v("ctaButton"),
+      // Footer/Preise
       footerText: v("footerText"), preiseSubtitle: v("preiseSubtitle"),
+      // Kontakt
       kontaktText: v("kontaktText"),
       email: v("kontaktEmail"), whatsapp: v("kontaktWhatsapp"), instagram: v("kontaktInstagram"),
     };
+    // Media URLs (only set if present, so we don't overwrite with null)
     if(logoUrl) data.logoUrl = logoUrl;
     if(heroImgUrl) data.heroImg = heroImgUrl;
     if(ueberImg1) data.ueberImg1 = ueberImg1;
     if(ueberImg2) data.ueberImg2 = ueberImg2;
+    if(problemImg) data.problemImg = problemImg;
+    if(atmoImg1) data.atmoImg1 = atmoImg1;
+    if(atmoImg2) data.atmoImg2 = atmoImg2;
+    if(atmoImg3) data.atmoImg3 = atmoImg3;
+    if(atmoImg4) data.atmoImg4 = atmoImg4;
 
     await setDoc(doc(db,"content","main"), data, {merge:true});
     toast("✅ Gespeichert!");
-  } catch(e) { toast("Fehler beim Speichern", true); }
+  } catch(e) { toast("Fehler beim Speichern", true); console.error(e); }
 };
 
 function v(id) { return document.getElementById(id)?.value?.trim() || ""; }
