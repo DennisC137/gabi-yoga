@@ -149,6 +149,7 @@ section{padding:100px 80px}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
 .testi-card{background:var(--warm-white);border-radius:var(--r);padding:36px 32px;border:1px solid var(--border);text-align:center;transition:transform .3s}
 .testi-card:hover{transform:translateY(-3px)}
+.testi-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;margin:0 auto 16px;display:none;border:3px solid var(--sage-pale);box-shadow:0 2px 12px rgba(107,127,99,.15)}
 .testi-quote{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;color:var(--text-dark);line-height:1.5;margin-bottom:20px}
 .testi-name{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--text-light)}
 .testi-stars{color:var(--sage);font-size:14px;letter-spacing:2px;margin-bottom:12px}
@@ -285,19 +286,19 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
 
 /* === RESPONSIVE === */
 @media(max-width:900px){
-  nav{padding:8px 16px;height:48px}
+  nav{padding:8px 16px;height:48px;justify-content:center}
   nav.scrolled{padding:6px 16px;height:44px}
   .nav-links{display:none}
-  .nav-hamburger{display:flex}
+  .nav-hamburger{display:flex;position:absolute;right:16px;top:50%;transform:translateY(-50%)}
   .nav-cta{display:none}
-  .nav-left,.nav-right{flex:0}
-  .nav-center{flex:0;display:flex;justify-content:flex-start;align-self:flex-start}
-  .nav-logo-img{height:130px;width:130px;margin-top:3px;border-width:3px}
-  nav.scrolled .nav-logo-img{height:60px;width:60px;margin-top:2px;border-width:2px}
-  .nav-logo-fallback{width:110px;height:110px;margin-top:3px}
-  nav.scrolled .nav-logo-fallback{width:55px;height:55px;margin-top:2px}
-  .nav-logo-fallback span:first-child{font-size:9px}
-  .nav-logo-fallback span:last-child{font-size:20px}
+  .nav-left,.nav-right{display:none}
+  .nav-center{flex:0;display:flex;justify-content:center;align-self:flex-start}
+  .nav-logo-img{height:120px;width:120px;margin-top:3px;border-width:3px}
+  nav.scrolled .nav-logo-img{height:56px;width:56px;margin-top:2px;border-width:2px}
+  .nav-logo-fallback{width:100px;height:100px;margin-top:3px}
+  nav.scrolled .nav-logo-fallback{width:50px;height:50px;margin-top:2px}
+  .nav-logo-fallback span:first-child{font-size:8px}
+  .nav-logo-fallback span:last-child{font-size:18px}
   nav.scrolled .nav-logo-fallback span:first-child{font-size:6px}
   nav.scrolled .nav-logo-fallback span:last-child{font-size:12px}
   section{padding:56px 20px}
@@ -457,16 +458,19 @@ footer{background:var(--cream);padding:56px 80px 36px;display:grid;grid-template
     </div>
     <div class="testi-grid">
       <div class="testi-card fade-up">
+        <img class="testi-photo" id="testi1-img" alt="">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote" id="testi1-quote">„Ich konnte zum ersten Mal seit Monaten wirklich abschalten."</p>
         <span class="testi-name" id="testi1-name">— Lisa M.</span>
       </div>
       <div class="testi-card fade-up delay-1">
+        <img class="testi-photo" id="testi2-img" alt="">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote" id="testi2-quote">„Mein Rücken fühlt sich endlich wieder frei an."</p>
         <span class="testi-name" id="testi2-name">— Sandra K.</span>
       </div>
       <div class="testi-card fade-up delay-2">
+        <img class="testi-photo" id="testi3-img" alt="">
         <div class="testi-stars">★★★★★</div>
         <p class="testi-quote" id="testi3-quote">„Ich gehe jedes Mal leichter nach Hause."</p>
         <span class="testi-name" id="testi3-name">— Julia R.</span>
@@ -679,6 +683,9 @@ async function loadContent(){
     setText("testi2-name",d.testi2Name);
     setText("testi3-quote",d.testi3Quote);
     setText("testi3-name",d.testi3Name);
+    [["testi1-img",d.testi1Img],["testi2-img",d.testi2Img],["testi3-img",d.testi3Img]].forEach(([id,url])=>{
+      if(url){const el=document.getElementById(id);if(el){el.src=url;el.style.display="block"}}
+    });
 
     // Einwände
     setText("einwand1-q",d.einwand1Q);
