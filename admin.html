@@ -459,16 +459,37 @@ body { font-family:'Jost',sans-serif; background:var(--bg); color:var(--text); f
         <h2 class="panel-title">Testimonials & <em>Bewertungen</em></h2>
         <div class="card">
           <div class="card-title">Testimonial 1</div>
+          <div class="field"><label>Foto</label>
+            <div class="img-upload-area" onclick="document.getElementById('testi1ImgFile').click()">
+              <input type="file" id="testi1ImgFile" accept="image/*" onchange="previewMedia(this,'testi1ImgPreview','testi1Img')">
+              <div class="img-upload-label"><span>📸</span>Foto hochladen</div>
+              <img id="testi1ImgPreview" class="img-preview">
+            </div>
+          </div>
           <div class="field"><label>Zitat</label><textarea id="testi1Quote" placeholder="„Ich konnte zum ersten Mal seit Monaten wirklich abschalten.""></textarea></div>
           <div class="field"><label>Name</label><input type="text" id="testi1Name" placeholder="— Lisa M."></div>
         </div>
         <div class="card">
           <div class="card-title">Testimonial 2</div>
+          <div class="field"><label>Foto</label>
+            <div class="img-upload-area" onclick="document.getElementById('testi2ImgFile').click()">
+              <input type="file" id="testi2ImgFile" accept="image/*" onchange="previewMedia(this,'testi2ImgPreview','testi2Img')">
+              <div class="img-upload-label"><span>📸</span>Foto hochladen</div>
+              <img id="testi2ImgPreview" class="img-preview">
+            </div>
+          </div>
           <div class="field"><label>Zitat</label><textarea id="testi2Quote" placeholder="„Mein Rücken fühlt sich endlich wieder frei an.""></textarea></div>
           <div class="field"><label>Name</label><input type="text" id="testi2Name" placeholder="— Sandra K."></div>
         </div>
         <div class="card">
           <div class="card-title">Testimonial 3</div>
+          <div class="field"><label>Foto</label>
+            <div class="img-upload-area" onclick="document.getElementById('testi3ImgFile').click()">
+              <input type="file" id="testi3ImgFile" accept="image/*" onchange="previewMedia(this,'testi3ImgPreview','testi3Img')">
+              <div class="img-upload-label"><span>📸</span>Foto hochladen</div>
+              <img id="testi3ImgPreview" class="img-preview">
+            </div>
+          </div>
           <div class="field"><label>Zitat</label><textarea id="testi3Quote" placeholder="„Ich gehe jedes Mal leichter nach Hause.""></textarea></div>
           <div class="field"><label>Name</label><input type="text" id="testi3Name" placeholder="— Julia R."></div>
         </div>
@@ -849,7 +870,8 @@ async function loadContentForm() {
       ueberImg1:"ueberImg1Preview", ueberImg2:"ueberImg2Preview",
       problemImg:"problemImgPreview",
       atmoImg1:"atmoImg1Preview", atmoImg2:"atmoImg2Preview",
-      atmoImg3:"atmoImg3Preview", atmoImg4:"atmoImg4Preview"
+      atmoImg3:"atmoImg3Preview", atmoImg4:"atmoImg4Preview",
+      testi1Img:"testi1ImgPreview", testi2Img:"testi2ImgPreview", testi3Img:"testi3ImgPreview"
     };
     // Map Firestore field -> upload key (some differ)
     const uploadKeyMap = {heroImg:"heroImgUrl"};
@@ -875,6 +897,9 @@ window.saveContent = async function() {
     const atmoImg2 = await uploadFile("atmoImg2") || window._uploadedUrls["atmoImg2"] || null;
     const atmoImg3 = await uploadFile("atmoImg3") || window._uploadedUrls["atmoImg3"] || null;
     const atmoImg4 = await uploadFile("atmoImg4") || window._uploadedUrls["atmoImg4"] || null;
+    const testi1Img = await uploadFile("testi1Img") || window._uploadedUrls["testi1Img"] || null;
+    const testi2Img = await uploadFile("testi2Img") || window._uploadedUrls["testi2Img"] || null;
+    const testi3Img = await uploadFile("testi3Img") || window._uploadedUrls["testi3Img"] || null;
 
     const data = {
       // Hero
@@ -927,6 +952,9 @@ window.saveContent = async function() {
     if(atmoImg2) data.atmoImg2 = atmoImg2;
     if(atmoImg3) data.atmoImg3 = atmoImg3;
     if(atmoImg4) data.atmoImg4 = atmoImg4;
+    if(testi1Img) data.testi1Img = testi1Img;
+    if(testi2Img) data.testi2Img = testi2Img;
+    if(testi3Img) data.testi3Img = testi3Img;
 
     await setDoc(doc(db,"content","main"), data, {merge:true});
     toast("✅ Gespeichert!");
